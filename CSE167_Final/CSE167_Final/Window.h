@@ -10,16 +10,25 @@
 #include <GL/glew.h>
 #endif
 #include <GLFW/glfw3.h>
-#include "Cube.h"
 #include "shader.h"
+#include "Cube.h"
+#include "skybox.h"
 
 class Window
 {
 public:
+    //Variables
 	static int width;
 	static int height;
 	static glm::mat4 P; // P for projection
 	static glm::mat4 V; // V for view
+    
+    //Shaders
+    static GLuint skyboxShader;
+
+    
+    
+    //Functions
 	static void initialize_objects();
 	static void clean_up();
 	static GLFWwindow* create_window(int width, int height);

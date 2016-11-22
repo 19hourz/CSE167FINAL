@@ -1,12 +1,14 @@
 #include "window.h"
 
 const char* window_title = "GLFW Starter Project";
+//Objects global var
 Cube * cube;
-GLint shaderProgram;
+Skybox* skybox;
 
-// On some systems you need to change this to the absolute path
-#define VERTEX_SHADER_PATH "./shader.vert"
-#define FRAGMENT_SHADER_PATH "./shader.frag"
+//Shaders
+GLuint Window::skyboxShader;
+#define SKYBOX_VERTEX_SHADER_PATH "./skybox.vert"
+#define SKYBOX_FRAGMENT_SHADER_PATH "./skybox.frag"
 
 // Default camera parameters
 glm::vec3 cam_pos(0.0f, 0.0f, 20.0f);		// e  | Position of camera
@@ -21,17 +23,19 @@ glm::mat4 Window::V;
 
 void Window::initialize_objects()
 {
-	cube = new Cube();
-
 	// Load the shader program. Make sure you have the correct filepath up top
-	shaderProgram = LoadShaders(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
+    Window::skyboxShader = LoadShaders(SKYBOX_VERTEX_SHADER_PATH, SKYBOX_FRAGMENT_SHADER_PATH);
+    
+    cube = new Cube();
+    skybox = new Skybox;
+	
 }
 
 // Treat this as a destructor function. Delete dynamically allocated memory here.
 void Window::clean_up()
 {
 	delete(cube);
-	glDeleteProgram(shaderProgram);
+	glDeleteProgram(skyboxShader);
 }
 
 GLFWwindow* Window::create_window(int width, int height)
@@ -98,19 +102,24 @@ void Window::resize_callback(GLFWwindow* window, int width, int height)
 void Window::idle_callback()
 {
 	// Call the update function the cube
-	cube->update();
+	//cube->update();
 }
 
 void Window::display_callback(GLFWwindow* window)
 {
-	// Clear the color and depth buffers
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// Use the shader of programID
-	glUseProgram(shaderProgram);
+    // Clear the color and depth buffers
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    //Draw skybox first
+    glUseProgram(skyboxShader);
+    glDepthMask(GL_FALSE);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    skybox->draw(skyboxShader);
 	
+    
 	// Render the cube
-	cube->draw(shaderProgram);
+	//cube->draw(shaderProgram);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();

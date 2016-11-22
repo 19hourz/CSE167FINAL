@@ -1,4 +1,4 @@
-#include "skybox.h"
+#include "Skybox.h"
 #include "Window.h"
 #include <stdio.h>
 #include <iostream>
@@ -102,7 +102,7 @@ GLuint loadCubemap(vector<const GLchar*> faces)
 }
 
 
-skybox::skybox()
+Skybox::Skybox()
 {
     toWorld = glm::mat4(1.0f);
     
@@ -133,17 +133,17 @@ skybox::skybox()
     
     // Cubemap (Skybox)
     vector<const GLchar*> faces;
-    faces.push_back("right.ppm");
-    faces.push_back("left.ppm");
-    faces.push_back("top.ppm");
-    faces.push_back("bottom.ppm");
-    faces.push_back("back.ppm");
-    faces.push_back("front.ppm");
+    faces.push_back("./Textures/right.ppm");
+    faces.push_back("./Textures/left.ppm");
+    faces.push_back("./Textures/top.ppm");
+    faces.push_back("./Textures/bottom.ppm");
+    faces.push_back("./Textures/back.ppm");
+    faces.push_back("./Textures/front.ppm");
     cubemapTexture = loadCubemap(faces);
     
 }
 
-skybox::~skybox()
+Skybox::~Skybox()
 {
     // Delete previously generated buffers. Note that forgetting to do this can waste GPU memory in a
     // large project! This could crash the graphics driver due to memory leaks, or slow down application performance!
@@ -155,7 +155,7 @@ skybox::~skybox()
 
 
 
-void skybox::draw(GLuint shaderProgram)
+void Skybox::draw(GLuint shaderProgram)
 {
     
     // Draw skybox first

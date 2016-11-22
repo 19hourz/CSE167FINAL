@@ -20,7 +20,7 @@
 using namespace std;
 using namespace glm;
 
-class skybox
+class Skybox
 {
 protected:
     
@@ -34,8 +34,8 @@ public:
     GLuint skyboxVAO, skyboxVBO;
     
     //Functions
-	skybox();
-    ~skybox();
+	Skybox();
+    ~Skybox();
     void draw(GLuint);
 //    void update();
 //    void orbit(float,glm::vec3);
