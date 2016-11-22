@@ -11,7 +11,7 @@ GLuint Window::skyboxShader;
 #define SKYBOX_FRAGMENT_SHADER_PATH "./skybox.frag"
 
 // Default camera parameters
-glm::vec3 cam_pos(0.0f, 0.0f, 20.0f);		// e  | Position of camera
+glm::vec3 cam_pos(0.0f, 0.0f, -20.0f);		// e  | Position of camera
 glm::vec3 cam_look_at(0.0f, 0.0f, 0.0f);	// d  | This is where the camera looks at
 glm::vec3 cam_up(0.0f, 1.0f, 0.0f);			// up | What orientation "up" is
 
@@ -21,8 +21,15 @@ int Window::height;
 glm::mat4 Window::P;
 glm::mat4 Window::V;
 
+//Other Variables
+double lastX;
+double lastY;
+bool camShouldMove;
+
 void Window::initialize_objects()
 {
+    camShouldMove = false;
+
 	// Load the shader program. Make sure you have the correct filepath up top
     Window::skyboxShader = LoadShaders(SKYBOX_VERTEX_SHADER_PATH, SKYBOX_FRAGMENT_SHADER_PATH);
     
@@ -127,6 +134,7 @@ void Window::display_callback(GLFWwindow* window)
 	glfwSwapBuffers(window);
 }
 
+
 void Window::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	// Check for a key press
@@ -139,4 +147,62 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
 			glfwSetWindowShouldClose(window, GL_TRUE);
 		}
 	}
+}
+
+
+void Window::mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+//    int left_state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
+//    if (left_state == GLFW_RELEASE){
+//        Movement = NONE;
+//        firstPoint = 1;
+//        pointID = 0;
+//        Window::shouldMove = false;
+//        highestPoint = findHighestPoint(beziers);
+//    }
+    
+    
+    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+        lastX = xpos;
+        lastY = ypos;
+        camShouldMove = true;
+        
+        
+//        //lastPosition = trackBallMapping(vec3(xpos,ypos,0));
+//        lastPosition = vec3(xpos,ypos,0);
+//        processSelection(xpos, ypos);
+    }
+    else if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE){
+        camShouldMove = false;
+    }
+    
+}
+
+// On mouse press, set lastX and lastY to where we clicked.
+
+// Camera movement when mouse moved
+void Window::mouse_move_callback(GLFWwindow* window, double xpos, double ypos){
+    if(camShouldMove){
+        float angle;
+        // Perform horizontal (y-axis) rotation
+        angle = (float) (lastX - xpos) / 100.0f;
+        cam_pos = glm::vec3(glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(cam_pos, 1.0f));
+        cam_up = glm::vec3(glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(cam_up, 1.0f));
+        //Now rotate vertically based on current orientation
+        angle = (float) (ypos - lastY) / 100.0f;
+        glm::vec3 axis = glm::cross((cam_pos - cam_look_at), cam_up);
+        cam_pos = glm::vec3(glm::rotate(glm::mat4(1.0f), angle, axis) * glm::vec4(cam_pos, 1.0f));
+        cam_up = glm::vec3(glm::rotate(glm::mat4(1.0f), angle, axis) * glm::vec4(cam_up, 1.0f));
+        // Now update the camera
+        V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+        lastX = xpos;
+        lastY = ypos;
+    }
+}
+
+void Window::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    
 }
