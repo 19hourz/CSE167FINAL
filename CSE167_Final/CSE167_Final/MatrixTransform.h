@@ -34,7 +34,6 @@ public:
     GLfloat radius;
     bool hasCulling;
     MatrixTransform(mat4);
-    MatrixTransform(GLfloat radius, glm::vec3 center);
     ~MatrixTransform();
     void draw(mat4) override;
     void update() override;

@@ -18,6 +18,7 @@
 		283355C91DE4F21500C9D118 /* Group.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355C21DE4F21500C9D118 /* Group.cpp */; };
 		283355CA1DE4F21500C9D118 /* MatrixTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355C41DE4F21500C9D118 /* MatrixTransform.cpp */; };
 		283355CB1DE4F21500C9D118 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355C61DE4F21500C9D118 /* Node.cpp */; };
+		283355D21DE5066D00C9D118 /* Building.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355D01DE5066D00C9D118 /* Building.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,6 +58,8 @@
 		283355CD1DE4FE8200C9D118 /* cube.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = cube.vert; path = Shaders/cube.vert; sourceTree = "<group>"; };
 		283355CE1DE504B100C9D118 /* skybox.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = skybox.frag; path = Shaders/skybox.frag; sourceTree = "<group>"; };
 		283355CF1DE504B100C9D118 /* skybox.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = skybox.vert; path = Shaders/skybox.vert; sourceTree = "<group>"; };
+		283355D01DE5066D00C9D118 /* Building.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Building.cpp; sourceTree = "<group>"; };
+		283355D11DE5066D00C9D118 /* Building.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Building.h; sourceTree = "<group>"; };
 		287543991DE3FF30004C0FB2 /* CSE167_Final */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CSE167_Final; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -124,6 +127,8 @@
 				283355AA1DE4CD0200C9D118 /* Cube.cpp */,
 				283355CC1DE4FE8200C9D118 /* cube.frag */,
 				283355CD1DE4FE8200C9D118 /* cube.vert */,
+				283355D11DE5066D00C9D118 /* Building.h */,
+				283355D01DE5066D00C9D118 /* Building.cpp */,
 			);
 			path = CSE167_Final;
 			sourceTree = "<group>";
@@ -189,6 +194,7 @@
 				283355CB1DE4F21500C9D118 /* Node.cpp in Sources */,
 				283355B61DE4CD0200C9D118 /* shader.cpp in Sources */,
 				283355B51DE4CD0200C9D118 /* main.cpp in Sources */,
+				283355D21DE5066D00C9D118 /* Building.cpp in Sources */,
 				283355C81DE4F21500C9D118 /* Geode.cpp in Sources */,
 				283355B41DE4CD0200C9D118 /* Cube.cpp in Sources */,
 				283355C91DE4F21500C9D118 /* Group.cpp in Sources */,
