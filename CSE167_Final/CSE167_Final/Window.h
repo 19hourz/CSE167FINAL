@@ -13,6 +13,7 @@
 #include "shader.h"
 #include "Cube.h"
 #include "skybox.h"
+#include "Group.h"
 
 class Window
 {
@@ -25,8 +26,8 @@ public:
     
     //Shaders
     static GLuint skyboxShader;
+    static GLuint cubeShader;
 
-    
     
     //Functions
 	static void initialize_objects();

@@ -2,16 +2,21 @@
 
 const char* window_title = "GLFW Starter Project";
 //Objects global var
+Group* world;
 Cube * cube;
 Skybox* skybox;
 
 //Shaders
 GLuint Window::skyboxShader;
-#define SKYBOX_VERTEX_SHADER_PATH "./skybox.vert"
-#define SKYBOX_FRAGMENT_SHADER_PATH "./skybox.frag"
+GLuint Window::cubeShader;
+#define SKYBOX_VERTEX_SHADER_PATH "./Shaders/skybox.vert"
+#define SKYBOX_FRAGMENT_SHADER_PATH "./Shaders/skybox.frag"
+#define CUBE_VERTEX_SHADER_PATH "./Shaders/cube.vert"
+#define CUBE_FRAGMENT_SHADER_PATH "./Shaders/cube.frag"
+
 
 // Default camera parameters
-glm::vec3 cam_pos(0.0f, 0.0f, -20.0f);		// e  | Position of camera
+glm::vec3 cam_pos(0.0f, 0.0f, 20.0f);		// e  | Position of camera
 glm::vec3 cam_look_at(0.0f, 0.0f, 0.0f);	// d  | This is where the camera looks at
 glm::vec3 cam_up(0.0f, 1.0f, 0.0f);			// up | What orientation "up" is
 
@@ -32,9 +37,16 @@ void Window::initialize_objects()
 
 	// Load the shader program. Make sure you have the correct filepath up top
     Window::skyboxShader = LoadShaders(SKYBOX_VERTEX_SHADER_PATH, SKYBOX_FRAGMENT_SHADER_PATH);
+    Window::cubeShader = LoadShaders(CUBE_VERTEX_SHADER_PATH, CUBE_FRAGMENT_SHADER_PATH);
+
     
-    cube = new Cube();
+    world = new Group();
+    cube = new Cube(1);
     skybox = new Skybox;
+    
+    // Build world
+    world->addChild(cube);
+
 	
 }
 
@@ -125,8 +137,8 @@ void Window::display_callback(GLFWwindow* window)
     skybox->draw(skyboxShader);
 	
     
-	// Render the cube
-	//cube->draw(shaderProgram);
+	// Render the world
+    world->draw(mat4(1.0f));
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
@@ -152,35 +164,21 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
 
 void Window::mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
-//    int left_state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
-//    if (left_state == GLFW_RELEASE){
-//        Movement = NONE;
-//        firstPoint = 1;
-//        pointID = 0;
-//        Window::shouldMove = false;
-//        highestPoint = findHighestPoint(beziers);
-//    }
-    
-    
+
     if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
         double xpos, ypos;
         glfwGetCursorPos(window, &xpos, &ypos);
         lastX = xpos;
         lastY = ypos;
         camShouldMove = true;
-        
-        
-//        //lastPosition = trackBallMapping(vec3(xpos,ypos,0));
-//        lastPosition = vec3(xpos,ypos,0);
-//        processSelection(xpos, ypos);
     }
+    
     else if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE){
         camShouldMove = false;
     }
     
 }
 
-// On mouse press, set lastX and lastY to where we clicked.
 
 // Camera movement when mouse moved
 void Window::mouse_move_callback(GLFWwindow* window, double xpos, double ypos){

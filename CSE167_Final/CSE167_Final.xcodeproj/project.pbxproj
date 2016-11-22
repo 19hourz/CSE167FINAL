@@ -14,6 +14,10 @@
 		283355B61DE4CD0200C9D118 /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355AE1DE4CD0200C9D118 /* shader.cpp */; };
 		283355B71DE4CD0200C9D118 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355B21DE4CD0200C9D118 /* Window.cpp */; };
 		283355BF1DE4D5CA00C9D118 /* Skybox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355BD1DE4D5CA00C9D118 /* Skybox.cpp */; };
+		283355C81DE4F21500C9D118 /* Geode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355C01DE4F21500C9D118 /* Geode.cpp */; };
+		283355C91DE4F21500C9D118 /* Group.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355C21DE4F21500C9D118 /* Group.cpp */; };
+		283355CA1DE4F21500C9D118 /* MatrixTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355C41DE4F21500C9D118 /* MatrixTransform.cpp */; };
+		283355CB1DE4F21500C9D118 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355C61DE4F21500C9D118 /* Node.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,10 +43,20 @@
 		283355B01DE4CD0200C9D118 /* shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
 		283355B21DE4CD0200C9D118 /* Window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
 		283355B31DE4CD0200C9D118 /* Window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
-		283355BB1DE4D4D200C9D118 /* skybox.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = skybox.frag; sourceTree = "<group>"; };
-		283355BC1DE4D4D200C9D118 /* skybox.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = skybox.vert; sourceTree = "<group>"; };
 		283355BD1DE4D5CA00C9D118 /* Skybox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Skybox.cpp; sourceTree = "<group>"; };
 		283355BE1DE4D5CA00C9D118 /* Skybox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Skybox.h; sourceTree = "<group>"; };
+		283355C01DE4F21500C9D118 /* Geode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geode.cpp; sourceTree = "<group>"; };
+		283355C11DE4F21500C9D118 /* Geode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geode.h; sourceTree = "<group>"; };
+		283355C21DE4F21500C9D118 /* Group.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Group.cpp; sourceTree = "<group>"; };
+		283355C31DE4F21500C9D118 /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
+		283355C41DE4F21500C9D118 /* MatrixTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MatrixTransform.cpp; sourceTree = "<group>"; };
+		283355C51DE4F21500C9D118 /* MatrixTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatrixTransform.h; sourceTree = "<group>"; };
+		283355C61DE4F21500C9D118 /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
+		283355C71DE4F21500C9D118 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		283355CC1DE4FE8200C9D118 /* cube.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = cube.frag; path = Shaders/cube.frag; sourceTree = "<group>"; };
+		283355CD1DE4FE8200C9D118 /* cube.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = cube.vert; path = Shaders/cube.vert; sourceTree = "<group>"; };
+		283355CE1DE504B100C9D118 /* skybox.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = skybox.frag; path = Shaders/skybox.frag; sourceTree = "<group>"; };
+		283355CF1DE504B100C9D118 /* skybox.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = skybox.vert; path = Shaders/skybox.vert; sourceTree = "<group>"; };
 		287543991DE3FF30004C0FB2 /* CSE167_Final */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CSE167_Final; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -90,16 +104,26 @@
 			children = (
 				283355AD1DE4CD0200C9D118 /* main.h */,
 				283355AC1DE4CD0200C9D118 /* main.cpp */,
-				283355B31DE4CD0200C9D118 /* Window.h */,
-				283355B21DE4CD0200C9D118 /* Window.cpp */,
 				283355B01DE4CD0200C9D118 /* shader.h */,
 				283355AE1DE4CD0200C9D118 /* shader.cpp */,
+				283355B31DE4CD0200C9D118 /* Window.h */,
+				283355B21DE4CD0200C9D118 /* Window.cpp */,
+				283355C71DE4F21500C9D118 /* Node.h */,
+				283355C61DE4F21500C9D118 /* Node.cpp */,
+				283355C11DE4F21500C9D118 /* Geode.h */,
+				283355C01DE4F21500C9D118 /* Geode.cpp */,
+				283355C31DE4F21500C9D118 /* Group.h */,
+				283355C21DE4F21500C9D118 /* Group.cpp */,
+				283355C51DE4F21500C9D118 /* MatrixTransform.h */,
+				283355C41DE4F21500C9D118 /* MatrixTransform.cpp */,
 				283355BE1DE4D5CA00C9D118 /* Skybox.h */,
 				283355BD1DE4D5CA00C9D118 /* Skybox.cpp */,
-				283355BC1DE4D4D200C9D118 /* skybox.vert */,
-				283355BB1DE4D4D200C9D118 /* skybox.frag */,
+				283355CE1DE504B100C9D118 /* skybox.frag */,
+				283355CF1DE504B100C9D118 /* skybox.vert */,
 				283355AB1DE4CD0200C9D118 /* Cube.h */,
 				283355AA1DE4CD0200C9D118 /* Cube.cpp */,
+				283355CC1DE4FE8200C9D118 /* cube.frag */,
+				283355CD1DE4FE8200C9D118 /* cube.vert */,
 			);
 			path = CSE167_Final;
 			sourceTree = "<group>";
@@ -162,9 +186,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				283355CB1DE4F21500C9D118 /* Node.cpp in Sources */,
 				283355B61DE4CD0200C9D118 /* shader.cpp in Sources */,
 				283355B51DE4CD0200C9D118 /* main.cpp in Sources */,
+				283355C81DE4F21500C9D118 /* Geode.cpp in Sources */,
 				283355B41DE4CD0200C9D118 /* Cube.cpp in Sources */,
+				283355C91DE4F21500C9D118 /* Group.cpp in Sources */,
+				283355CA1DE4F21500C9D118 /* MatrixTransform.cpp in Sources */,
 				283355BF1DE4D5CA00C9D118 /* Skybox.cpp in Sources */,
 				283355B71DE4CD0200C9D118 /* Window.cpp in Sources */,
 			);
