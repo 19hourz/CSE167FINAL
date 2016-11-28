@@ -14,6 +14,8 @@
 #include "Cube.h"
 #include "skybox.h"
 #include "Group.h"
+#include "MatrixTransform.h"
+#include "Building.h"
 
 class Window
 {
@@ -28,7 +30,7 @@ public:
     static GLuint skyboxShader;
     static GLuint cubeShader;
 
-    
+
     //Functions
 	static void initialize_objects();
 	static void clean_up();

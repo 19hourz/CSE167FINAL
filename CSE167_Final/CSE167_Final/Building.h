@@ -1,5 +1,5 @@
-#ifndef _CUBE_H_
-#define _CUBE_H_
+#ifndef _BUILDING_H_
+#define _BUILDING_H_
 
 #define GLFW_INCLUDE_GLEXT
 #ifdef __APPLE__
@@ -15,27 +15,29 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Geode.h"
+#include "Cube.h"
+#include <stdio.h>      /* printf, scanf, puts, NULL */
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
+
+
+class Cube;
 
 class Building :public Geode{
 protected:
     
     
 public:
-    Building(int cubeType);
+    Building();
     ~Building();
     
     glm::mat4 toWorld;
-    
+
     void draw(mat4) override;
     void update() override;
-    void spin();
     //    void move();
     
-    // These variables are needed for the shader program
-    GLuint VBO, VAO, EBO;
-    GLuint CAO, CBO;
-    GLuint uProjection, uModelview;
-    GLint CubeShader; 
+
 };
 
 

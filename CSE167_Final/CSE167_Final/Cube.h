@@ -16,6 +16,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Geode.h"
 
+
 class Cube :public Geode{
 protected:
     int cubeType;
@@ -38,7 +39,8 @@ public:
     GLuint VBO, VAO, EBO;
     GLuint CAO, CBO;
     GLuint uProjection, uModelview;
-    GLint CubeShader; 
+    GLint CubeShader;
+    friend class Building;
 };
 
 

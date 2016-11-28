@@ -1,9 +1,11 @@
 #include "window.h"
+using namespace glm;
 
 const char* window_title = "GLFW Starter Project";
 //Objects global var
 Group* world;
 Cube * cube;
+Building* building;
 Skybox* skybox;
 
 //Shaders
@@ -34,7 +36,7 @@ bool camShouldMove;
 void Window::initialize_objects()
 {
     camShouldMove = false;
-
+    
 	// Load the shader program. Make sure you have the correct filepath up top
     Window::skyboxShader = LoadShaders(SKYBOX_VERTEX_SHADER_PATH, SKYBOX_FRAGMENT_SHADER_PATH);
     Window::cubeShader = LoadShaders(CUBE_VERTEX_SHADER_PATH, CUBE_FRAGMENT_SHADER_PATH);
@@ -42,10 +44,23 @@ void Window::initialize_objects()
     
     world = new Group();
     cube = new Cube(1);
-    skybox = new Skybox;
+    skybox = new Skybox();
+    building = new Building();
+    
     
     // Build world
-    world->addChild(cube);
+    //world->addChild(cube);
+    //world->addChild(building);
+    
+    //Construct City
+    for(int i = 0; i < 10; i++){
+        for(int j = 0; j < 10; j++){
+            MatrixTransform *pos = new MatrixTransform(translate(mat4(1.0f), vec3(5.0f*i, 0.0, 5.0f*j)));
+            world->addChild(pos);
+            pos->addChild(new Building());
+    
+        }
+    }
 
 	
 }
@@ -152,6 +167,29 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
 	// Check for a key press
 	if (action == GLFW_PRESS)
 	{
+        if (key == GLFW_KEY_S){
+            glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
+            cam_pos = cam_pos - direction*2.0f;
+            V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+        }
+        else if (key == GLFW_KEY_W){
+            glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
+            cam_pos = cam_pos + direction*2.0f;
+            Window::V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+        }
+        else if (key == GLFW_KEY_A){
+            glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
+            glm::vec3 left = glm::cross(cam_up, direction);
+            cam_pos = cam_pos + left*2.0f;
+            V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+        }
+        else if (key == GLFW_KEY_D){
+            glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
+            glm::vec3 right = glm::cross(-cam_up, direction);
+            cam_pos = cam_pos + right*2.0f;
+            V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+        }
+        
 		// Check if escape was pressed
 		if (key == GLFW_KEY_ESCAPE)
 		{

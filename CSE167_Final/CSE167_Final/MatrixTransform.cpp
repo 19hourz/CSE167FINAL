@@ -24,8 +24,9 @@ MatrixTransform::~MatrixTransform()
 
 void MatrixTransform::draw(mat4 C)
 {
-
-
+    for(Node* child : children){
+        child->draw(C * M);
+    }
 }
 
 void MatrixTransform::setM(mat4 m)
