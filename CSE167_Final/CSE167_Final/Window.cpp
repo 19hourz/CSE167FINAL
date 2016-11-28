@@ -18,7 +18,7 @@ GLuint Window::cubeShader;
 
 
 // Default camera parameters
-glm::vec3 cam_pos(0.0f, 0.0f, 20.0f);		// e  | Position of camera
+glm::vec3 cam_pos(0.0f, 20.0f, -10.0f);		// e  | Position of camera
 glm::vec3 cam_look_at(0.0f, 0.0f, 0.0f);	// d  | This is where the camera looks at
 glm::vec3 cam_up(0.0f, 1.0f, 0.0f);			// up | What orientation "up" is
 
@@ -35,6 +35,7 @@ bool camShouldMove;
 
 void Window::initialize_objects()
 {
+    srand (1);//Random seed
     camShouldMove = false;
     
 	// Load the shader program. Make sure you have the correct filepath up top

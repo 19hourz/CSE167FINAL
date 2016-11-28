@@ -10,7 +10,7 @@ Cube *cube1;
 Building::Building()
 {
     cube1 = new Cube(1);
-    srand (1);
+    //srand (1);
     toWorld = mat4(1.0f);
     double posX = rand()%100/100.0;
     double negX = -rand()%100/100.0;
