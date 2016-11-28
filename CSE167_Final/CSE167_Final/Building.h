@@ -18,14 +18,13 @@
 #include "Cube.h"
 #include <stdio.h>      /* printf, scanf, puts, NULL */
 #include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
-
+#include <vector>
 
 class Cube;
 
 class Building :public Geode{
 protected:
-    
+    std::vector<glm::mat4> blocksPos;
     
 public:
     Building();

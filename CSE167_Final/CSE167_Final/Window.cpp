@@ -18,7 +18,7 @@ GLuint Window::cubeShader;
 
 
 // Default camera parameters
-glm::vec3 cam_pos(0.0f, 20.0f, -10.0f);		// e  | Position of camera
+glm::vec3 cam_pos(0.0f, 0.0f, 40.0f);		// e  | Position of camera
 glm::vec3 cam_look_at(0.0f, 0.0f, 0.0f);	// d  | This is where the camera looks at
 glm::vec3 cam_up(0.0f, 1.0f, 0.0f);			// up | What orientation "up" is
 
@@ -59,7 +59,8 @@ void Window::initialize_objects()
             MatrixTransform *pos = new MatrixTransform(translate(mat4(1.0f), vec3(5.0f*i, 0.0, 5.0f*j)));
             world->addChild(pos);
             pos->addChild(new Building());
-    
+            //pos->addChild(new Cube(1));
+
         }
     }
 
@@ -170,24 +171,24 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
 	{
         if (key == GLFW_KEY_S){
             glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
-            cam_pos = cam_pos - direction*2.0f;
+            cam_pos = cam_pos - direction;
             V = glm::lookAt(cam_pos, cam_look_at, cam_up);
         }
         else if (key == GLFW_KEY_W){
             glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
-            cam_pos = cam_pos + direction*2.0f;
+            cam_pos = cam_pos + direction;
             Window::V = glm::lookAt(cam_pos, cam_look_at, cam_up);
         }
         else if (key == GLFW_KEY_A){
             glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
             glm::vec3 left = glm::cross(cam_up, direction);
-            cam_pos = cam_pos + left*2.0f;
+            cam_pos = cam_pos + left;
             V = glm::lookAt(cam_pos, cam_look_at, cam_up);
         }
         else if (key == GLFW_KEY_D){
             glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
             glm::vec3 right = glm::cross(-cam_up, direction);
-            cam_pos = cam_pos + right*2.0f;
+            cam_pos = cam_pos + right;
             V = glm::lookAt(cam_pos, cam_look_at, cam_up);
         }
         
