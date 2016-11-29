@@ -50,8 +50,8 @@ void Window::initialize_objects()
     
     
     // Build world
-    //world->addChild(cube);
-    world->addChild(building);
+//    world->addChild(cube);
+    //world->addChild(building);
     
     //Construct City
     for(int i = 0; i < 10; i++){
