@@ -18,7 +18,7 @@ GLuint Window::cubeShader;
 
 
 // Default camera parameters
-glm::vec3 cam_pos(0.0f, 0.0f, 40.0f);		// e  | Position of camera
+glm::vec3 cam_pos(0.0f, 0.0f, -40.0f);		// e  | Position of camera
 glm::vec3 cam_look_at(0.0f, 0.0f, 0.0f);	// d  | This is where the camera looks at
 glm::vec3 cam_up(0.0f, 1.0f, 0.0f);			// up | What orientation "up" is
 
@@ -51,7 +51,7 @@ void Window::initialize_objects()
     
     // Build world
     //world->addChild(cube);
-    //world->addChild(building);
+    world->addChild(building);
     
     //Construct City
     for(int i = 0; i < 10; i++){
