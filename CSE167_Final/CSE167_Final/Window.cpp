@@ -20,6 +20,8 @@ bool rightRot = false;
 bool leftRot = false;
 bool accelerate = false;
 bool deccelerate = false;
+bool planeView = true;
+bool godInit = false;
 //Shaders
 GLuint Window::skyboxShader;
 GLuint Window::cubeShader;
@@ -165,14 +167,22 @@ void Window::resize_callback(GLFWwindow* window, int width, int height)
 
 void Window::idle_callback()
 {
-    vec3 tempDirec = plane->direction;
-    cam_pos = plane->center;
-    cam_look_at = cam_pos + tempDirec;
-    tempDirec = normalize(tempDirec);
-    GLfloat pos = 0.2;
-    cam_pos = plane->center - pos * tempDirec;
-    cam_up = plane->upDirection;
-    V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+    if(planeView){
+        vec3 tempDirec = plane->direction;
+        cam_pos = plane->center;
+        cam_look_at = cam_pos + tempDirec;
+        tempDirec = normalize(tempDirec);
+        GLfloat pos = 0.2;
+        cam_pos = plane->center - pos * tempDirec;
+        cam_up = plane->upDirection;
+        V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+    }else if(!godInit){
+        cam_pos = vec3(0.0f, 0.0f, -40.0f);
+        cam_look_at = vec3(0.0f, 0.0f, 0.0f);
+        cam_up = vec3(0.0f, 1.0f, 0.0f);
+        V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+        godInit = true;
+    }
     world->update();
     if (up) plane->up();
     if (down) plane->down();
@@ -237,6 +247,15 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
         //Regenerate buildings
         else if (key == GLFW_KEY_B){
             Window::shouldRebuild = true;
+        }
+        else if (key == GLFW_KEY_V){
+            if (planeView) {
+                planeView = false;
+            }
+            else{
+                planeView = true;
+                godInit = false;d
+            }
         }
         
 		// Check if escape was pressed
