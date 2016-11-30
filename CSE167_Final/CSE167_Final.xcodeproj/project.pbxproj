@@ -19,6 +19,7 @@
 		283355CA1DE4F21500C9D118 /* MatrixTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355C41DE4F21500C9D118 /* MatrixTransform.cpp */; };
 		283355CB1DE4F21500C9D118 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355C61DE4F21500C9D118 /* Node.cpp */; };
 		283355D21DE5066D00C9D118 /* Building.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355D01DE5066D00C9D118 /* Building.cpp */; };
+		52DB8B8C1DEE93A200B6DFAE /* Plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52DB8B8A1DEE93A200B6DFAE /* Plane.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,6 +62,8 @@
 		283355D01DE5066D00C9D118 /* Building.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Building.cpp; sourceTree = "<group>"; };
 		283355D11DE5066D00C9D118 /* Building.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Building.h; sourceTree = "<group>"; };
 		287543991DE3FF30004C0FB2 /* CSE167_Final */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CSE167_Final; sourceTree = BUILT_PRODUCTS_DIR; };
+		52DB8B891DEE936300B6DFAE /* Plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plane.h; sourceTree = "<group>"; };
+		52DB8B8A1DEE93A200B6DFAE /* Plane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Plane.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +114,6 @@
 				283355AE1DE4CD0200C9D118 /* shader.cpp */,
 				283355B31DE4CD0200C9D118 /* Window.h */,
 				283355B21DE4CD0200C9D118 /* Window.cpp */,
-				283355C71DE4F21500C9D118 /* Node.h */,
 				283355C61DE4F21500C9D118 /* Node.cpp */,
 				283355C11DE4F21500C9D118 /* Geode.h */,
 				283355C01DE4F21500C9D118 /* Geode.cpp */,
@@ -129,6 +131,9 @@
 				283355CC1DE4FE8200C9D118 /* cube.frag */,
 				283355D11DE5066D00C9D118 /* Building.h */,
 				283355D01DE5066D00C9D118 /* Building.cpp */,
+				52DB8B891DEE936300B6DFAE /* Plane.h */,
+				52DB8B8A1DEE93A200B6DFAE /* Plane.cpp */,
+				283355C71DE4F21500C9D118 /* Node.h */,
 			);
 			path = CSE167_Final;
 			sourceTree = "<group>";
@@ -164,7 +169,7 @@
 				TargetAttributes = {
 					287543981DE3FF30004C0FB2 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = RY5642NV8L;
+						DevelopmentTeam = 5YFX8A6H5D;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -195,6 +200,7 @@
 				283355B61DE4CD0200C9D118 /* shader.cpp in Sources */,
 				283355B51DE4CD0200C9D118 /* main.cpp in Sources */,
 				283355D21DE5066D00C9D118 /* Building.cpp in Sources */,
+				52DB8B8C1DEE93A200B6DFAE /* Plane.cpp in Sources */,
 				283355C81DE4F21500C9D118 /* Geode.cpp in Sources */,
 				283355B41DE4CD0200C9D118 /* Cube.cpp in Sources */,
 				283355C91DE4F21500C9D118 /* Group.cpp in Sources */,
@@ -298,7 +304,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				DEVELOPMENT_TEAM = RY5642NV8L;
+				DEVELOPMENT_TEAM = 5YFX8A6H5D;
 				HEADER_SEARCH_PATHS = (
 					"/Developer/glfw-3.2.1/include",
 					/Developer/glm,
@@ -312,7 +318,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				DEVELOPMENT_TEAM = RY5642NV8L;
+				DEVELOPMENT_TEAM = 5YFX8A6H5D;
 				HEADER_SEARCH_PATHS = (
 					"/Developer/glfw-3.2.1/include",
 					/Developer/glm,

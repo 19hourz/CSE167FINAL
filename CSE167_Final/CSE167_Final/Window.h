@@ -16,7 +16,7 @@
 #include "Group.h"
 #include "MatrixTransform.h"
 #include "Building.h"
-
+#include "Plane.h"
 class Window
 {
 public:

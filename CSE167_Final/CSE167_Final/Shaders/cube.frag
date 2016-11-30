@@ -23,6 +23,8 @@ void main()
 //        color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 //    }
     color = texture(ourTexture, TexCoord);
-
+    if (type == 10) {//139,69,19
+        color = vec4(0.54f, 0.27f, 0.07f, 1.0f);
+    }
 }
 
