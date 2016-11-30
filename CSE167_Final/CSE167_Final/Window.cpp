@@ -6,7 +6,11 @@ const char* window_title = "GLFW Starter Project";
 //Object variables
 Group* world;
 Cube * cube;
-Cube * ground;
+Cube * ground1;
+Cube * ground2;
+Cube * ground3;
+Cube * ground4;
+
 Building* building;
 Skybox* skybox;
 
@@ -35,15 +39,21 @@ double lastX;
 double lastY;
 bool camShouldMove;
 bool Window::shouldRebuild;
-mat4 groundPos;
+mat4 groundPos1,groundPos2,groundPos3,groundPos4;
 
 void Window::initialize_objects()
 {
     srand (1);//Random seed
     camShouldMove = false;
     Window::shouldRebuild = false;
-    Window::worldPos = mat4(1.0f);
-    groundPos = scale(mat4(1.0f), vec3(50,0.1,50)) * Window::worldPos;
+    Window::worldPos = translate(mat4(1.0f), vec3(-50,0,-50));
+    //worldPos = mat4(1.0f);
+    mat4 flip = rotate(mat4(1.0f), glm::pi<float>(), glm::vec3(0.0f, 0.0f, 1.0f)) * translate(mat4(1.0f), vec3(-50.0f,0.0f,0.0f));
+    groundPos1 = worldPos * translate(mat4(1.0f), vec3(0,0,50)) * flip * scale(mat4(1.0f), vec3(50,0.1,50));
+    groundPos2 = worldPos * translate(mat4(1.0f), vec3(0,0,0)) * flip * scale(mat4(1.0f), vec3(50,0.1,50));
+    //groundPos3 = worldPos * translate(mat4(1.0f), vec3(0,0,50)) * flip * scale(mat4(1.0f), vec3(50,0.1,50));
+    //groundPos4 = worldPos * translate(mat4(1.0f), vec3(50,0,50)) * flip *scale(mat4(1.0f), vec3(50,0.1,50));
+
     
 	// Load the shader program. Make sure you have the correct filepath up top
     Window::skyboxShader = LoadShaders(SKYBOX_VERTEX_SHADER_PATH, SKYBOX_FRAGMENT_SHADER_PATH);
@@ -52,7 +62,12 @@ void Window::initialize_objects()
     
     world = new Group();
     cube = new Cube(1);
-    ground = new Cube(2);
+    ground1 = new Cube(2);
+    ground2 = new Cube(3);
+    ground3 = new Cube(4);
+    ground4 = new Cube(5);
+
+    
     skybox = new Skybox();
     building = new Building();
     
@@ -66,8 +81,7 @@ void Window::initialize_objects()
         for(int j = 0; j < 10; j++){
             MatrixTransform *pos = new MatrixTransform(translate(mat4(1.0f), vec3(5.0f*i, 0.0, 5.0f*j)));
             world->addChild(pos);
-            pos->addChild(new Building());
-            //pos->addChild(new Cube(1));
+            pos->addChild(building);
         }
     }
 
@@ -160,7 +174,12 @@ void Window::display_callback(GLFWwindow* window)
     glCullFace(GL_BACK);
     skybox->draw(skyboxShader);
 	
-    ground->draw(groundPos);
+    //Draw 4 pieces of ground
+    ground1->draw(groundPos1);
+    ground2->draw(groundPos2);
+    //ground3->draw(groundPos3);
+    //ground4->draw(groundPos4);
+
 	// Render the world
     world->draw(Window::worldPos);
 
