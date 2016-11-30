@@ -7,7 +7,11 @@
 using namespace std;
 
 GLuint buildingTexture;
-GLuint cityTexture;
+GLuint cityTexture1;
+GLuint cityTexture2;
+GLuint cityTexture3;
+GLuint cityTexture4;
+
 
 
 // Note that GL_QUADS is deprecated in modern OpenGL (and removed from OSX systems).
@@ -118,6 +122,51 @@ GLuint loadTexture(GLchar* path)
 Cube::Cube(int type)
 {
     
+//    GLfloat vertices[] = {
+//        // Positions          // Texture Coords
+//        0.0f, 0.0f, 0.0f,  0.0f, 0.0f,
+//        1.0f, 0.0f, 0.0f,  1.0f, 0.0f,
+//        1.0f,  1.0f, 0.0f,  1.0f, 1.0f,
+//        1.0f,  1.0f, 0.0f,  1.0f, 1.0f,
+//        0.0f,  1.0f, 0.0f,  0.0f, 1.0f,
+//        0.0f,  0.0f, 0.0f,  0.0f, 0.0f,
+//        
+//        0.0f, 0.0f,  1.0f,  0.0f, 0.0f,
+//        1.0f, 0.0f,  1.0f,  1.0f, 0.0f,
+//        1.0f,  1.0f,  1.0f,  1.0f, 1.0f,
+//        1.0f,  1.0f,  1.0f,  1.0f, 1.0f,
+//        0.0f,  1.0f,  1.0f,  0.0f, 1.0f,
+//        0.0f,  0.0f,  1.0f,  0.0f, 0.0f,
+//        
+//        0.0f,  1.0f,  1.0f,  1.0f, 0.0f,
+//        0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
+//        0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
+//        0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
+//        0.0f, 0.0f,  1.0f,  0.0f, 0.0f,
+//        0.0f,  1.0f,  1.0f,  1.0f, 0.0f,
+//        
+//        1.0f,  1.0f,  1.0f,  1.0f, 0.0f,
+//        1.0f,  1.0f, 0.0f,   1.0f, 1.0f,
+//        1.0f,  0.0f, 0.0f,   0.0f, 1.0f,
+//        1.0f,  0.0f, 0.0f,   0.0f, 1.0f,
+//        1.0f, 0.0f,  1.0f,  0.0f, 0.0f,
+//        1.0f,  1.0f,  1.0f,  1.0f, 0.0f,
+//        
+//        0.0f, 0.0f, 0.0f,  0.0f, 1.0f,
+//        1.0f,  0.0f, 0.0f,   1.0f, 1.0f,
+//        1.0f, 0.0f,  1.0f,  1.0f, 0.0f,
+//        1.0f, 0.0f,  1.0f,  1.0f, 0.0f,
+//        0.0f, 0.0f,  1.0f,  0.0f, 0.0f,
+//        0.0f, 0.0f, 0.0f,  0.0f, 1.0f,
+//        
+//        0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
+//        1.0f,  1.0f, 0.0f,  1.0f, 1.0f,
+//        1.0f,  1.0f,  1.0f,  1.0f, 0.0f,
+//        1.0f,  1.0f,  1.0f,  1.0f, 0.0f,
+//        0.0f,  1.0f,  1.0f,  0.0f, 0.0f,
+//        0.0f,  1.0f,  0.0f,  0.0f, 1.0f
+//    };
+//    
     GLfloat vertices[] = {
         // Positions          // Texture Coords
         0.0f, 0.0f, 0.0f,  0.0f, 0.0f,
@@ -167,8 +216,12 @@ Cube::Cube(int type)
     countSpin = 0;
     angle = 1.0f;
     toWorld = glm::mat4(1.0f);
-    buildingTexture = loadTexture("textures/Building.ppm");
-    cityTexture = loadTexture("textures/city.ppm");
+    buildingTexture = loadTexture("./textures/Building.ppm");
+    cityTexture1 = loadTexture("./textures/city1.ppm");
+    cityTexture2 = loadTexture("./textures/city2.ppm");
+    //cityTexture3 = loadTexture("./textures/city3.ppm");
+    //cityTexture4 = loadTexture("./textures/city3.ppm");
+
     
     // Setup cube VAO
     glGenVertexArrays(1, &VAO);
@@ -217,35 +270,19 @@ void Cube::draw(mat4 C)
 
     
     // Cubes
-    if (cubeType == 1){
-        glBindVertexArray(VAO);
-        glActiveTexture(GL_TEXTURE0);
-        glUniform1i(glGetUniformLocation(Window::cubeShader, "ourTexture"), 0);
-        glBindTexture(GL_TEXTURE_2D, buildingTexture);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
-        glDepthMask(GL_TRUE);
-    }
-    else if(cubeType == 2){
-        glBindVertexArray(VAO);
-        glActiveTexture(GL_TEXTURE0);
-        glUniform1i(glGetUniformLocation(Window::cubeShader, "ourTexture"), 0);
-        glBindTexture(GL_TEXTURE_2D, cityTexture);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
-        glDepthMask(GL_TRUE);
-    }
-    else{
-        glBindVertexArray(VAO);
-        glActiveTexture(GL_TEXTURE0);
-        glUniform1i(glGetUniformLocation(Window::cubeShader, "ourTexture"), 0);
-        glBindTexture(GL_TEXTURE_2D, buildingTexture);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
-        glDepthMask(GL_TRUE);
-    }
-
-
+    glBindVertexArray(VAO);
+    glActiveTexture(GL_TEXTURE0);
+    glUniform1i(glGetUniformLocation(Window::cubeShader, "ourTexture"), 0);
+    if(cubeType == 1) glBindTexture(GL_TEXTURE_2D, buildingTexture);
+    else if(cubeType == 2) glBindTexture(GL_TEXTURE_2D, cityTexture1);
+    else if(cubeType == 3) glBindTexture(GL_TEXTURE_2D, cityTexture2);
+    else if(cubeType == 4) glBindTexture(GL_TEXTURE_2D, cityTexture3);
+    else if(cubeType == 5) glBindTexture(GL_TEXTURE_2D, cityTexture4);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+    glDepthMask(GL_TRUE);
+    
+    
     
 }
 
