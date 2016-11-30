@@ -13,11 +13,9 @@ double random1(){
     return ((double) rand() / (RAND_MAX));
 }
 
-Building::Building()
-{
-    block = new Cube(1);
-    numBlocks = 4;
-    toWorld = mat4(1.0f);
+void Building::randBuilding(){
+    //Clear blocksPos vector first
+    blocksPos.clear();
     
     //Main building construction
     //Left bottom corner coordinate
@@ -44,7 +42,14 @@ Building::Building()
         pos = translate(mat4(1.0f), vec3(x,0.0,z)) * pos;
         blocksPos.push_back(pos);
     }
-    
+}
+
+Building::Building()
+{
+    block = new Cube(1);
+    numBlocks = 4;
+    toWorld = mat4(1.0f);
+    randBuilding();
 }
 
 Building::~Building()
@@ -54,6 +59,9 @@ Building::~Building()
 
 void Building::draw(mat4 C)
 {
+    if(Window::shouldRebuild){
+        randBuilding();
+    }
     for(int i = 0; i < blocksPos.size(); i++){
         mat4 newPos = C * blocksPos.at(i);
         block->draw(newPos);

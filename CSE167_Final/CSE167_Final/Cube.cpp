@@ -115,59 +115,6 @@ GLuint loadTexture(GLchar* path)
 
 Cube::Cube(int type)
 {
-//    GLfloat vertices[8][3] = {
-//        
-//        // "Front" vertices
-//        {0.0, 0.0,  2.0}, {2.0, 0.0,  2.0}, {2.0,  2.0,  2.0}, {0.0,  2.0,  2.0},
-//        // "Back" vertices
-//        {0.0, 0.0, 0.0}, {2.0, 0.0, 0.0}, {2.0, 2.0, 0.0}, {0.0,  2.0, 0.0}
-//        
-//    };
-    
-//    GLfloat vertices[] = {
-//        // Positions          // Texture Coords
-//        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-//        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-//        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-//        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-//        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-//        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-//        
-//        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-//        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-//        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-//        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-//        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-//        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-//        
-//        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-//        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-//        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-//        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-//        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-//        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-//        
-//        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-//        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-//        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-//        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-//        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-//        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-//        
-//        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-//        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-//        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-//        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-//        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-//        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-//        
-//        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-//        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-//        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-//        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-//        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-//        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-//    };
     
     GLfloat vertices[] = {
         // Positions          // Texture Coords
@@ -232,25 +179,6 @@ Cube::Cube(int type)
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
     glBindVertexArray(0);
     
-//    // Create array object and buffers. Remember to delete your buffers when the object is destroyed!
-//    glGenVertexArrays(1, &VAO);
-//    glGenBuffers(1, &VBO);
-//    glGenBuffers(1, &EBO);
-//    glBindVertexArray(VAO);
-//    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-//    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-//    glEnableVertexAttribArray(0);
-//    glVertexAttribPointer(0,// This first parameter x should be the same as the number passed into the line "layout (location = x)" in the vertex shader. In this case, it's 0. Valid values are 0 to GL_MAX_UNIFORM_LOCATIONS.
-//                          3, // This second line tells us how any components there are per vertex. In this case, it's 3 (we have an x, y, and z component)
-//                          GL_FLOAT, // What type these components are
-//                          GL_FALSE, // GL_TRUE means the values should be normalized. GL_FALSE means they shouldn't
-//                          3 * sizeof(GLfloat), // Offset between consecutive indices. Since each of our vertices have 3 floats, they should have the size of 3 floats in between
-//                          (GLvoid*)0); // Offset of the first vertex's component. In our case it's 0 since we don't pad the vertices array with anything.
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-//    glBindBuffer(GL_ARRAY_BUFFER, 0);
-//    glBindVertexArray(0);
-    
     
 }
 
@@ -283,12 +211,7 @@ void Cube::draw(mat4 C)
     glUniformMatrix4fv(uProjection, 1, GL_FALSE, &Window::P[0][0]);
     glUniformMatrix4fv(uModelview, 1, GL_FALSE, &modelview[0][0]);
     glUniform1i(utype, cubeType);
-//    // Now draw the cube. We simply need to bind the VAO associated with it.
-//    glBindVertexArray(VAO);
-//    // Tell OpenGL to draw with triangles, using 36 indices, the type of the indices, and the offset to start from
-//    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-//    // Unbind the VAO when we're done so we don't accidentally draw extra stuff or tamper with its bound buffers
-//    glBindVertexArray(0);
+
     
     // Cubes
     glBindVertexArray(VAO);

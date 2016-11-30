@@ -2,7 +2,7 @@
 using namespace glm;
 
 const char* window_title = "GLFW Starter Project";
-//Objects global var
+//Object variables
 Group* world;
 Cube * cube;
 Building* building;
@@ -32,11 +32,13 @@ glm::mat4 Window::V;
 double lastX;
 double lastY;
 bool camShouldMove;
+bool Window::shouldRebuild;
 
 void Window::initialize_objects()
 {
     srand (1);//Random seed
     camShouldMove = false;
+    Window::shouldRebuild = false;
     
 	// Load the shader program. Make sure you have the correct filepath up top
     Window::skyboxShader = LoadShaders(SKYBOX_VERTEX_SHADER_PATH, SKYBOX_FRAGMENT_SHADER_PATH);
@@ -192,6 +194,11 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
             V = glm::lookAt(cam_pos, cam_look_at, cam_up);
         }
         
+        //Regenerate buildings
+        else if (key == GLFW_KEY_B){
+            Window::shouldRebuild = true;
+        }
+        
 		// Check if escape was pressed
 		if (key == GLFW_KEY_ESCAPE)
 		{
@@ -199,6 +206,9 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
 			glfwSetWindowShouldClose(window, GL_TRUE);
 		}
 	}
+    else if(action == GLFW_RELEASE){
+        Window::shouldRebuild = false;
+    }
 }
 
 
