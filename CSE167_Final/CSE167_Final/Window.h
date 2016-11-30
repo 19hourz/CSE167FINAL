@@ -25,6 +25,7 @@ public:
 	static int height;
 	static glm::mat4 P; // P for projection
 	static glm::mat4 V; // V for view
+    static bool shouldRebuild;
     
     //Shaders
     static GLuint skyboxShader;
