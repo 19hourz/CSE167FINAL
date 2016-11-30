@@ -1,10 +1,12 @@
 #include "window.h"
 using namespace glm;
+using namespace std;
 
 const char* window_title = "GLFW Starter Project";
 //Object variables
 Group* world;
 Cube * cube;
+Cube * ground;
 Building* building;
 Skybox* skybox;
 
@@ -24,7 +26,7 @@ glm::vec3 cam_up(0.0f, 1.0f, 0.0f);			// up | What orientation "up" is
 
 int Window::width;
 int Window::height;
-
+glm::mat4 Window::worldPos;
 glm::mat4 Window::P;
 glm::mat4 Window::V;
 
@@ -33,12 +35,15 @@ double lastX;
 double lastY;
 bool camShouldMove;
 bool Window::shouldRebuild;
+mat4 groundPos;
 
 void Window::initialize_objects()
 {
     srand (1);//Random seed
     camShouldMove = false;
     Window::shouldRebuild = false;
+    Window::worldPos = mat4(1.0f);
+    groundPos = scale(mat4(1.0f), vec3(50,0.1,50)) * Window::worldPos;
     
 	// Load the shader program. Make sure you have the correct filepath up top
     Window::skyboxShader = LoadShaders(SKYBOX_VERTEX_SHADER_PATH, SKYBOX_FRAGMENT_SHADER_PATH);
@@ -47,6 +52,7 @@ void Window::initialize_objects()
     
     world = new Group();
     cube = new Cube(1);
+    ground = new Cube(2);
     skybox = new Skybox();
     building = new Building();
     
@@ -62,7 +68,6 @@ void Window::initialize_objects()
             world->addChild(pos);
             pos->addChild(new Building());
             //pos->addChild(new Cube(1));
-
         }
     }
 
@@ -155,9 +160,9 @@ void Window::display_callback(GLFWwindow* window)
     glCullFace(GL_BACK);
     skybox->draw(skyboxShader);
 	
-    
+    ground->draw(groundPos);
 	// Render the world
-    world->draw(mat4(1.0f));
+    world->draw(Window::worldPos);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
