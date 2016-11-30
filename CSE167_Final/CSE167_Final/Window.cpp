@@ -1,13 +1,21 @@
 #include "window.h"
 using namespace glm;
+using namespace std;
 
 const char* window_title = "GLFW Starter Project";
-//Objects global var
+//Object variables
 Group* world;
 Cube * cube;
+Cube * ground;
 Building* building;
 Skybox* skybox;
-
+Plane* plane;
+bool up = false;
+bool down = false;
+bool rightRot = false;
+bool leftRot = false;
+bool accelerate = false;
+bool deccelerate = false;
 //Shaders
 GLuint Window::skyboxShader;
 GLuint Window::cubeShader;
@@ -24,7 +32,7 @@ glm::vec3 cam_up(0.0f, 1.0f, 0.0f);			// up | What orientation "up" is
 
 int Window::width;
 int Window::height;
-
+glm::mat4 Window::worldPos;
 glm::mat4 Window::P;
 glm::mat4 Window::V;
 
@@ -32,11 +40,16 @@ glm::mat4 Window::V;
 double lastX;
 double lastY;
 bool camShouldMove;
+bool Window::shouldRebuild;
+mat4 groundPos;
 
 void Window::initialize_objects()
 {
     srand (1);//Random seed
     camShouldMove = false;
+    Window::shouldRebuild = false;
+    Window::worldPos = mat4(1.0f);
+    groundPos = scale(mat4(1.0f), vec3(50,0.1,50)) * Window::worldPos;
     
 	// Load the shader program. Make sure you have the correct filepath up top
     Window::skyboxShader = LoadShaders(SKYBOX_VERTEX_SHADER_PATH, SKYBOX_FRAGMENT_SHADER_PATH);
@@ -45,22 +58,22 @@ void Window::initialize_objects()
     
     world = new Group();
     cube = new Cube(1);
+    ground = new Cube(2);
     skybox = new Skybox();
     building = new Building();
-    
-    
+    plane = new Plane();
+    world->addChild(plane);
+    //plane->propellerSpeed = 0.05;
     // Build world
-    //world->addChild(cube);
-    world->addChild(building);
+//    world->addChild(cube);
+    //world->addChild(building);
     
     //Construct City
     for(int i = 0; i < 10; i++){
         for(int j = 0; j < 10; j++){
             MatrixTransform *pos = new MatrixTransform(translate(mat4(1.0f), vec3(5.0f*i, 0.0, 5.0f*j)));
             world->addChild(pos);
-            pos->addChild(new Building());
-            //pos->addChild(new Cube(1));
-
+            pos->addChild(building);
         }
     }
 
@@ -137,8 +150,21 @@ void Window::resize_callback(GLFWwindow* window, int width, int height)
 
 void Window::idle_callback()
 {
-	// Call the update function the cube
-	//cube->update();
+    vec3 tempDirec = plane->direction;
+    cam_pos = plane->center;
+    cam_look_at = cam_pos + tempDirec;
+    tempDirec = normalize(tempDirec);
+    GLfloat pos = 0.2;
+    cam_pos = plane->center - pos * tempDirec;
+    cam_up = plane->upDirection;
+    V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+    world->update();
+    if (up) plane->up();
+    if (down) plane->down();
+    if (leftRot) plane->leftRot();
+    if (rightRot) plane->rightRot();
+    if (accelerate) plane->speedUp();
+    if (deccelerate) plane->speedDown();
 }
 
 void Window::display_callback(GLFWwindow* window)
@@ -153,9 +179,9 @@ void Window::display_callback(GLFWwindow* window)
     glCullFace(GL_BACK);
     skybox->draw(skyboxShader);
 	
-    
+    ground->draw(groundPos);
 	// Render the world
-    world->draw(mat4(1.0f));
+    world->draw(Window::worldPos);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
@@ -170,26 +196,27 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
 	if (action == GLFW_PRESS)
 	{
         if (key == GLFW_KEY_S){
-            glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
-            cam_pos = cam_pos - direction;
-            V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+            up = true;
         }
         else if (key == GLFW_KEY_W){
-            glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
-            cam_pos = cam_pos + direction;
-            Window::V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+            down = true;
         }
         else if (key == GLFW_KEY_A){
-            glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
-            glm::vec3 left = glm::cross(cam_up, direction);
-            cam_pos = cam_pos + left;
-            V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+            leftRot = true;
         }
         else if (key == GLFW_KEY_D){
-            glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
-            glm::vec3 right = glm::cross(-cam_up, direction);
-            cam_pos = cam_pos + right;
-            V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+            rightRot = true;
+        }
+        else if (key == GLFW_KEY_DOWN){
+            deccelerate = true;
+        }
+        else if (key == GLFW_KEY_UP){
+            accelerate = true;
+        }
+        
+        //Regenerate buildings
+        else if (key == GLFW_KEY_B){
+            Window::shouldRebuild = true;
         }
         
 		// Check if escape was pressed
@@ -199,6 +226,27 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
 			glfwSetWindowShouldClose(window, GL_TRUE);
 		}
 	}
+    else if(action == GLFW_RELEASE){
+        Window::shouldRebuild = false;
+        if (key == GLFW_KEY_S){
+            up = false;
+        }
+        else if (key == GLFW_KEY_W){
+            down = false;
+        }
+        else if (key == GLFW_KEY_A){
+            leftRot = false;
+        }
+        else if (key == GLFW_KEY_D){
+            rightRot = false;
+        }
+        else if (key == GLFW_KEY_DOWN){
+            deccelerate = false;
+        }
+        else if (key == GLFW_KEY_UP){
+            accelerate = false;
+        }
+    }
 }
 
 

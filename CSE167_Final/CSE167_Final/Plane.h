@@ -22,16 +22,24 @@
 
 class Plane :public Geode{
 protected:
+public:
     glm::vec3 center;
     glm::vec3 direction;
-public:
+    glm::vec3 upDirection;
     Plane();
     ~Plane();
-    
+    GLfloat deg;
     glm::mat4 toWorld;
-    
+    GLfloat airSpeed = 0.01;
+    GLfloat propellerSpeed = 1.0;
     void draw(mat4) override;
     void update() override;
+    GLfloat speedUp();
+    GLfloat speedDown();
+    void up();
+    void down();
+    void leftRot();
+    void rightRot();
 };
 
 
