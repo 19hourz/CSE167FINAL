@@ -21,6 +21,7 @@ class Window
 {
 public:
     //Variables
+    static glm::mat4 worldPos;
 	static int width;
 	static int height;
 	static glm::mat4 P; // P for projection

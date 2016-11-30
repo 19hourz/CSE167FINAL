@@ -7,6 +7,8 @@
 using namespace std;
 
 GLuint buildingTexture;
+GLuint cityTexture;
+
 
 // Note that GL_QUADS is deprecated in modern OpenGL (and removed from OSX systems).
 // This is why we need to draw each face as 2 triangles instead of 1 quadrilateral
@@ -166,6 +168,7 @@ Cube::Cube(int type)
     angle = 1.0f;
     toWorld = glm::mat4(1.0f);
     buildingTexture = loadTexture("textures/Building.ppm");
+    cityTexture = loadTexture("textures/city.ppm");
     
     // Setup cube VAO
     glGenVertexArrays(1, &VAO);
@@ -214,13 +217,26 @@ void Cube::draw(mat4 C)
 
     
     // Cubes
-    glBindVertexArray(VAO);
-    glActiveTexture(GL_TEXTURE0);
-    glUniform1i(glGetUniformLocation(Window::cubeShader, "ourTexture"), 0);
-    glBindTexture(GL_TEXTURE_2D, buildingTexture);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-    glBindVertexArray(0);
-    glDepthMask(GL_TRUE);
+    if (cubeType == 1){
+        glBindVertexArray(VAO);
+        glActiveTexture(GL_TEXTURE0);
+        glUniform1i(glGetUniformLocation(Window::cubeShader, "ourTexture"), 0);
+        glBindTexture(GL_TEXTURE_2D, buildingTexture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
+        glDepthMask(GL_TRUE);
+    }
+    else if(cubeType == 2){
+        glBindVertexArray(VAO);
+        glActiveTexture(GL_TEXTURE0);
+        glUniform1i(glGetUniformLocation(Window::cubeShader, "ourTexture"), 0);
+        glBindTexture(GL_TEXTURE_2D, cityTexture);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
+        glDepthMask(GL_TRUE);
+    }
+    
+
 
     
 }
