@@ -206,8 +206,11 @@ void Window::initialize_objects()
                 }
             }
             float extra;
-            (j < 4)? extra = 0.0f:extra = (j-3)*1.5f;
-            MatrixTransform *pos = new MatrixTransform(translate(mat4(1.0f), vec3(13.0f*i, 0.0, 8.0*j + extra)));
+            //(j < 6)? extra = 0.0f:extra = (j-5)*0.7f;
+            if(j<6) extra = 0.0f ;
+            else if(j<7) extra = (j-6)*0.7f;
+            else extra = (j-7) * 2.5f;
+            MatrixTransform *pos = new MatrixTransform(translate(mat4(1.0f), vec3(13.0f*i, 0.0, 8.5*j + extra)));
             shift->addChild(pos);
             pos->addChild(community);
         }
