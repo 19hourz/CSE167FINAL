@@ -84,7 +84,7 @@ int main(void)
 
 	// Loop while GLFW window should stay open
 	while (!glfwWindowShouldClose(window))
-	{
+    {
 		// Main render display callback. Rendering of objects is done here.
 		Window::display_callback(window);
 		// Idle callback. Updating objects, etc. can be done here.

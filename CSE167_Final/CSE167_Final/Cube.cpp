@@ -238,6 +238,7 @@ Cube::Cube(int type)
     
 }
 
+
 Cube::~Cube()
 {
     // Delete previously generated buffers. Note that forgetting to do this can waste GPU memory in a
