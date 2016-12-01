@@ -14,7 +14,7 @@ Plane::Plane()
 {
     deg = 0.0;
     toWorld = mat4(1.0f);
-    direction = vec3(0.7071f, 0.0f, 0.7071f);
+    direction = vec3(-0.7071f, 0.0f, -0.7071f);
     upDirection = vec3(0.0f, 1.0f, 0.0f);
     center = vec3(0.0f, 0.5f, 0.0f);
     propeller1 = new Cube(10);

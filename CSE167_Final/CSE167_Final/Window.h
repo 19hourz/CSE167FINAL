@@ -17,6 +17,7 @@
 #include "MatrixTransform.h"
 #include "Building.h"
 #include "Plane.h"
+#include "Water.h"
 class Window
 {
 public:
@@ -27,10 +28,11 @@ public:
 	static glm::mat4 P; // P for projection
 	static glm::mat4 V; // V for view
     static bool shouldRebuild;
-    
+    static vec3 cam_pos;
     //Shaders
     static GLuint skyboxShader;
     static GLuint cubeShader;
+    static GLuint waterShader;
     
     //TextureID
     static GLuint buildingTexture;

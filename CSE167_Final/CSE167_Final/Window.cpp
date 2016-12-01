@@ -18,6 +18,7 @@ Cube * ground4;
 Building* building;
 Skybox* skybox;
 Plane* plane;
+Water* water;
 bool up = false;
 bool down = false;
 bool rightRot = false;
@@ -29,16 +30,19 @@ bool godInit = false;
 //Shaders
 GLuint Window::skyboxShader;
 GLuint Window::cubeShader;
+GLuint Window::waterShader;
 #define SKYBOX_VERTEX_SHADER_PATH "./Shaders/skybox.vert"
 #define SKYBOX_FRAGMENT_SHADER_PATH "./Shaders/skybox.frag"
 #define CUBE_VERTEX_SHADER_PATH "./Shaders/cube.vert"
 #define CUBE_FRAGMENT_SHADER_PATH "./Shaders/cube.frag"
+#define WATER_VERTEX_SHADER_PATH "./Shaders/water.vert"
+#define WATER_FRAGMENT_SHADER_PATH "./Shaders/water.frag"
 
 
 // Default camera parameters
-glm::vec3 cam_pos(0.0f, 0.0f, -40.0f);		// e  | Position of camera
-glm::vec3 cam_look_at(0.0f, 0.0f, 0.0f);	// d  | This is where the camera looks at
-glm::vec3 cam_up(0.0f, 1.0f, 0.0f);			// up | What orientation "up" is
+vec3 Window::cam_pos(0.0f, 0.5f, 0.0f);		// e  | Position of camera
+vec3 cam_look_at(-0.7071f, 0.0f, -0.7071f);	// d  | This is where the camera looks at
+vec3 cam_up(0.0f, 1.0f, 0.0f);			// up | What orientation "up" is
 
 int Window::width;
 int Window::height;
@@ -173,7 +177,7 @@ void Window::initialize_objects()
 	// Load the shader program. Make sure you have the correct filepath up top
     Window::skyboxShader = LoadShaders(SKYBOX_VERTEX_SHADER_PATH, SKYBOX_FRAGMENT_SHADER_PATH);
     Window::cubeShader = LoadShaders(CUBE_VERTEX_SHADER_PATH, CUBE_FRAGMENT_SHADER_PATH);
-
+    Window::waterShader = LoadShaders(WATER_VERTEX_SHADER_PATH, WATER_FRAGMENT_SHADER_PATH);
     
     world = new Group();
     cube = new Cube(1);
@@ -182,11 +186,12 @@ void Window::initialize_objects()
     ground3 = new Cube(4);
     ground4 = new Cube(5);
 
-    
+    water = new Water();
     skybox = new Skybox();
     building = new Building();
     plane = new Plane();
     world->addChild(plane);
+    world->addChild(water);
     //plane->propellerSpeed = 0.05;
     // Build world
 //    world->addChild(cube);
@@ -221,6 +226,8 @@ void Window::clean_up()
 {
 	delete(cube);
 	glDeleteProgram(skyboxShader);
+    glDeleteProgram(cubeShader);
+    glDeleteProgram(waterShader);
 }
 
 GLFWwindow* Window::create_window(int width, int height)
@@ -296,8 +303,8 @@ void Window::idle_callback()
         cam_up = plane->upDirection;
         V = glm::lookAt(cam_pos, cam_look_at, cam_up);
     }else if(!godInit){
-        cam_pos = vec3(0.0f, 0.0f, -40.0f);
-        cam_look_at = vec3(0.0f, 0.0f, 0.0f);
+        cam_pos = vec3(20.0f, 0.5f, 20.0f);
+        cam_look_at = normalize(vec3(-1.0f, 0.0f, -1.0f));
         cam_up = vec3(0.0f, 1.0f, 0.0f);
         V = glm::lookAt(cam_pos, cam_look_at, cam_up);
         godInit = true;
@@ -315,8 +322,8 @@ void Window::display_callback(GLFWwindow* window)
 {
     // Clear the color and depth buffers
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
     //Draw skybox first
+    //glEnable(GL_CLIP_DISTANCE0);
     glUseProgram(skyboxShader);
     glDepthMask(GL_FALSE);
     glEnable(GL_CULL_FACE);

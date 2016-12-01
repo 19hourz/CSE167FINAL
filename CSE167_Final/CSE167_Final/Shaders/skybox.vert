@@ -25,6 +25,7 @@ out vec3 TexCoords;
 
 void main()
 {
+
     // OpenGL maintains the D matrix so you only need to multiply by P, V (aka C inverse), and M
     //gl_Position = projection * view * model * vec4(position.x, position.y, position.z, 1.0);
     gl_Position = projection * view * model * vec4(position, 1.0f);

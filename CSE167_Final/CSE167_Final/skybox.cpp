@@ -84,7 +84,6 @@ GLuint loadCubemap(vector<const GLchar*> faces)
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
     for(GLuint i = 0; i < faces.size(); i++)
     {
-        //image = SOIL_load_image(faces[i], &width, &height, 0, SOIL_LOAD_RGB);
         image = loadPPM(faces[i], width, height);
         glTexImage2D(
                      GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
@@ -197,36 +196,3 @@ void Skybox::draw(GLuint shaderProgram)
     
    
 }
-
-//void OBJObject::update()
-//{
-//    move();
-//}
-
-////Additional Feature Functions
-//void OBJObject::orbit(float deg,vec3 axis)
-//{
-//    Window::V =  glm::rotate(glm::mat4(1.0f), deg/180.0f * glm::pi<float>(), glm::vec3(axis.x,axis.y, 0.0f)) * Window::V ;
-//}
-//
-//void OBJObject::zoom(float factor)
-//{
-//    //Window::V =  translate(mat4(1.0f), vec3(0.0f,0.0f,factor)) * Window::V;
-////    glm::vec3 direction = glm::normalize(Window::cam_look_at - Window::cam_pos);
-////    Window::cam_pos = Window::cam_pos + direction/100.0f;
-////    Window::V = glm::lookAt(Window::cam_pos, Window::cam_look_at, Window::cam_up);
-////    cout << Window::V[0][0] << Window::V[0][1] << Window::V[0][0] << Window::V[0][2] << Window::V[0][3] << endl;
-////     cout << Window::V[1][0] << Window::V[1][1] << Window::V[1][2] << Window::V[1][3] << endl;
-////     cout << Window::V[2][0] << Window::V[2][1] << Window::V[2][2] << Window::V[2][3] << endl;
-////     cout << Window::V[3][0] << Window::V[3][1] << Window::V[3][2] << Window::V[3][3] << endl;
-//}
-//
-//void OBJObject::moveCam(float distance)
-//{
-//    Window::V =  translate(mat4(1.0f), vec3(distance,0.0f,0.0f)) * Window::V;
-//}
-//
-//void OBJObject::move()
-//{
-//    toWorld = translate(mat4(1.0f), vec3(0.1f, 0.0f, 0.1f)) * toWorld;
-//}
