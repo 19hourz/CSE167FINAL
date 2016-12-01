@@ -3,6 +3,10 @@ using namespace glm;
 using namespace std;
 
 const char* window_title = "GLFW Starter Project";
+//Texture variables
+GLuint Window::buildingTexture,Window::buildingTexture1,Window::buildingTexture2,Window::buildingTexture3,Window::buildingTexture4;
+GLuint Window::buildingTexture5,Window::buildingTexture6,Window::buildingTexture7,Window::buildingTexture8;
+GLuint Window::cityTexture1,Window::cityTexture2,Window::cityTexture3,Window::cityTexture4;
 //Object variables
 Group* world;
 Cube * cube;
@@ -49,8 +53,111 @@ bool camShouldMove;
 bool Window::shouldRebuild;
 mat4 groundPos1,groundPos2,groundPos3,groundPos4;
 
+
+
+/** Load a ppm file from disk.
+ @input filename The location of the PPM file.  If the file is not found, an error message
+ will be printed and this function will return 0
+ @input width This will be modified to contain the width of the loaded image, or 0 if file not found
+ @input height This will be modified to contain the height of the loaded image, or 0 if file not found
+ @return Returns the RGB pixel data as interleaved unsigned chars (R0 G0 B0 R1 G1 B1 R2 G2 B2 .... etc) or 0 if an error ocured
+ **/
+unsigned char* readPPM(const char* filename, int& width, int& height)
+{
+    const int BUFSIZE = 128;
+    FILE* fp;
+    unsigned int read;
+    unsigned char* rawData;
+    char buf[3][BUFSIZE];
+    char* retval_fgets;
+    size_t retval_sscanf;
+    
+    if ( (fp=fopen(filename, "rb")) == NULL)
+    {
+        std::cerr << "error reading ppm file, could not locate " << filename << std::endl;
+        width = 0;
+        height = 0;
+        return NULL;
+    }
+    
+    // Read magic number:
+    retval_fgets = fgets(buf[0], BUFSIZE, fp);
+    
+    // Read width and height:
+    do
+    {
+        retval_fgets=fgets(buf[0], BUFSIZE, fp);
+    } while (buf[0][0] == '#');
+    retval_sscanf=sscanf(buf[0], "%s %s", buf[1], buf[2]);
+    width  = atoi(buf[1]);
+    height = atoi(buf[2]);
+    
+    // Read maxval:
+    do
+    {
+        retval_fgets=fgets(buf[0], BUFSIZE, fp);
+    } while (buf[0][0] == '#');
+    
+    // Read image data:
+    rawData = new unsigned char[width * height * 3];
+    read = fread(rawData, width * height * 3, 1, fp);
+    fclose(fp);
+    if (read != 1)
+    {
+        std::cerr << "error parsing ppm file, incomplete data" << std::endl;
+        delete[] rawData;
+        width = 0;
+        height = 0;
+        return NULL;
+    }
+    
+    return rawData;
+}
+
+
+// This function loads a texture from file. Note: texture loading functions like these are usually
+// managed by a 'Resource Manager' that manages all resources (like textures, models, audio).
+// For learning purposes we'll just define it as a utility function.
+GLuint loadTexture(GLchar* path)
+{
+    //Generate texture ID and load texture data
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+    int width,height;
+    unsigned char* image = readPPM(path, width, height);
+    // Assign texture to ID
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    
+    // Parameters
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    return textureID;
+}
+
+
 void Window::initialize_objects()
 {
+    //Load Texture
+    Window::buildingTexture = loadTexture("./textures/Building.ppm");
+    Window::buildingTexture1 = loadTexture("./textures/Building1.ppm");
+    Window::buildingTexture2 = loadTexture("./textures/Building2.ppm");
+    Window::buildingTexture3 = loadTexture("./textures/Building3.ppm");
+    Window::buildingTexture4 = loadTexture("./textures/Building4.ppm");
+    Window::buildingTexture5 = loadTexture("./textures/Building5.ppm");
+    Window::buildingTexture6 = loadTexture("./textures/Building6.ppm");
+    Window::buildingTexture7 = loadTexture("./textures/Building7.ppm");
+    Window::buildingTexture8 = loadTexture("./textures/Building8.ppm");
+    Window::cityTexture1 = loadTexture("./textures/city1.ppm");
+    Window::cityTexture2 = loadTexture("./textures/city2.ppm");
+    //cityTexture3 = loadTexture("./textures/city3.ppm");
+    //cityTexture4 = loadTexture("./textures/city3.ppm");
+    
+    
     srand (1);//Random seed
     camShouldMove = false;
     Window::shouldRebuild = false;
@@ -86,15 +193,6 @@ void Window::initialize_objects()
     //world->addChild(building);
     
     //Construct City
-//    for(int i = 0; i < 10; i++){
-//        for(int j = 0; j < 10; j++){
-//            MatrixTransform *pos = new MatrixTransform(translate(mat4(1.0f), vec3(5.0f*i, 0.0, 5.0f*j)));
-//            world->addChild(pos);
-//            pos->addChild(new Building());
-//        }
-//    }
-    
-    
     MatrixTransform* shift = new MatrixTransform(translate(mat4(1.0f), vec3(1.5f, 0.0, 0.5f)));
     world->addChild(shift);
     for(int i = 0; i < 4; i++){
@@ -114,8 +212,6 @@ void Window::initialize_objects()
             pos->addChild(community);
         }
     }
-    
-
 
 	
 }
