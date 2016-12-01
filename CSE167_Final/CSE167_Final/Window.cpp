@@ -86,13 +86,36 @@ void Window::initialize_objects()
     //world->addChild(building);
     
     //Construct City
-    for(int i = 0; i < 10; i++){
-        for(int j = 0; j < 10; j++){
-            MatrixTransform *pos = new MatrixTransform(translate(mat4(1.0f), vec3(5.0f*i, 0.0, 5.0f*j)));
-            world->addChild(pos);
-            pos->addChild(building);
+//    for(int i = 0; i < 10; i++){
+//        for(int j = 0; j < 10; j++){
+//            MatrixTransform *pos = new MatrixTransform(translate(mat4(1.0f), vec3(5.0f*i, 0.0, 5.0f*j)));
+//            world->addChild(pos);
+//            pos->addChild(new Building());
+//        }
+//    }
+    
+    
+    MatrixTransform* shift = new MatrixTransform(translate(mat4(1.0f), vec3(1.5f, 0.0, 0.5f)));
+    world->addChild(shift);
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 11; j++){
+            Group* community = new Group();
+            for(int a = 0; a < 2; a++){
+                for(int b = 0; b < 2; b++){
+                    MatrixTransform *trans = new MatrixTransform(translate(mat4(1.0f), vec3(5.0f*a, 0.0, 3.0f*b)));
+                    trans->addChild(new Building());
+                    community->addChild(trans);
+                }
+            }
+            float extra;
+            (j < 4)? extra = 0.0f:extra = (j-3)*1.5f;
+            MatrixTransform *pos = new MatrixTransform(translate(mat4(1.0f), vec3(13.0f*i, 0.0, 8.0*j + extra)));
+            shift->addChild(pos);
+            pos->addChild(community);
         }
     }
+    
+
 
 	
 }
@@ -254,9 +277,23 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
             }
             else{
                 planeView = true;
-                godInit = false;d
+                godInit = false;
             }
         }
+        
+        else if (key == GLFW_KEY_E){
+            glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
+            cam_pos = cam_pos - direction;
+            V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+        }
+        else if (key == GLFW_KEY_Q){
+            glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
+            cam_pos = cam_pos + direction;
+            Window::V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+        }
+
+        
+        
         
 		// Check if escape was pressed
 		if (key == GLFW_KEY_ESCAPE)

@@ -19,11 +19,16 @@ void Building::randBuilding(){
     
     //Main building construction
     //Left bottom corner coordinate
+//    double mainX = random1()/2.0 + 0.3; //Rand 0.1~0.6
+//    double mainZ = random1()/2.0 + 0.3; //Rand 0.1~0.6
+//    double mainWidth = ((random1()/2.0 + 0.5) * (2-mainX))/2.0; //Rand 0.5~1.0
+//    double mainLength = ((random1()/2.0 + 0.5) * (2-mainZ))/2.0; //Rand 0.5~1.0
+//    double mainHeight = random1()*2 + 2.0; // Rand 2~4
     double mainX = random1()/2.0 + 0.3; //Rand 0.1~0.6
     double mainZ = random1()/2.0 + 0.3; //Rand 0.1~0.6
-    double mainWidth = ((random1()/2.0 + 0.5) * (2-mainX))/2.0; //Rand 0.5~1.0
-    double mainLength = ((random1()/2.0 + 0.5) * (2-mainZ))/2.0; //Rand 0.5~1.0
-    double mainHeight = random1()*2 + 2.0; // Rand 2~4
+    double mainWidth = ((random1()/2.0 + 0.5) * (2-mainX))*2; //Rand 0.5~1.0
+    double mainLength = (random1()/2.0 + 0.5) * (2-mainZ)*2; //Rand 0.5~1.0
+    double mainHeight = random1()*4 + 6.0; // Rand 2~4
     //printf("x:%f z:%f width:%f length:%f \n height:%f",x,z,widthFactor,lengthFactor,heightFactor);
     mat4 mainPos = scale(mat4(1.0f), vec3(mainWidth,mainHeight,mainLength));
     mainPos = translate(mat4(1.0f), vec3(mainX,0.0,mainZ)) * mainPos;
