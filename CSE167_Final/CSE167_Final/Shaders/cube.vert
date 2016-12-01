@@ -20,8 +20,11 @@ out vec2 TexCoord;
 
 void main()
 {
+
     // OpenGL maintains the D matrix so you only need to multiply by P, V (aka C inverse), and M
     gl_Position = projection * modelview * vec4(position.x, position.y, position.z, 1.0);
+    vec4 ClipPlane = vec4(0,-1,0,0.5);
+    gl_ClipDistance[0] = dot(modelview * vec4(position.x, position.y, position.z, 1.0), ClipPlane);
     TexCoord = texCoord;
 }
 
