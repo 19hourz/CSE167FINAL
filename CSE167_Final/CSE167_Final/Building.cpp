@@ -5,8 +5,10 @@
 using namespace std;
 using namespace glm;
 
-Cube *block;
+
+//Cube* Building::block;
 int numBlocks;
+int textureID;
 
 //Generate random number from 0 to 1
 double random1(){
@@ -14,6 +16,7 @@ double random1(){
 }
 
 void Building::randBuilding(){
+    textureID = rand()%9 + 20;
     //Clear blocksPos vector first
     blocksPos.clear();
     
@@ -21,9 +24,9 @@ void Building::randBuilding(){
     //Left bottom corner coordinate
     double mainX = random1()/2.0 + 0.3; //Rand 0.1~0.6
     double mainZ = random1()/2.0 + 0.3; //Rand 0.1~0.6
-    double mainWidth = ((random1()/2.0 + 0.5) * (2-mainX))/2.0; //Rand 0.5~1.0
-    double mainLength = ((random1()/2.0 + 0.5) * (2-mainZ))/2.0; //Rand 0.5~1.0
-    double mainHeight = random1()*2 + 2.0; // Rand 2~4
+    double mainWidth = ((random1()/2.0 + 0.5) * (2-mainX))*2; //Rand 0.5~1.0
+    double mainLength = (random1()/2.0 + 0.5) * (2-mainZ)*2; //Rand 0.5~1.0
+    double mainHeight = random1()*4 + 6.0; // Rand 2~4
     //printf("x:%f z:%f width:%f length:%f \n height:%f",x,z,widthFactor,lengthFactor,heightFactor);
     mat4 mainPos = scale(mat4(1.0f), vec3(mainWidth,mainHeight,mainLength));
     mainPos = translate(mat4(1.0f), vec3(mainX,0.0,mainZ)) * mainPos;
@@ -46,10 +49,11 @@ void Building::randBuilding(){
 
 Building::Building()
 {
-    block = new Cube(1);
+    randBuilding();
+    //cout << "!!!!!" << textureID << endl;
+    Building::block = new Cube(textureID);
     numBlocks = 4;
     toWorld = mat4(1.0f);
-    randBuilding();
 }
 
 Building::~Building()
@@ -61,10 +65,11 @@ void Building::draw(mat4 C)
 {
     if(Window::shouldRebuild){
         randBuilding();
+        block->setCubeType(textureID);
     }
     for(int i = 0; i < blocksPos.size(); i++){
         mat4 newPos = C * blocksPos.at(i);
-        block->draw(newPos);
+        Building::block->draw(newPos);
     }
 }
 

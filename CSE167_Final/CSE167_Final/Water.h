@@ -31,15 +31,16 @@
 class Water :public Geode{
 private:
     GLuint ududv;
+    GLfloat move = 0.0;
     GLfloat waterLevel = 0.0f;
     const GLfloat waterVertices[18] = {
         // Positions
-        0.0f, 0.0f, 0.0f,
-        100.0f,  0.0f, 0.0f,
-        100.0f, 0.0f,  100.0f,
-        100.0f, 0.0f,  100.0f,
-        0.0f, 0.0f,  100.0f,
-        0.0f, 0.0f, 0.0f
+        -100.0f, -0.5f, -100.0f,
+        100.0f,  -0.5f, -100.0f,
+        100.0f, -0.5f,  100.0f,
+        100.0f, -0.5f,  100.0f,
+        -100.0f, -0.5f,  100.0f,
+        -100.0f, -0.5f, -100.0f
     };
 public:
     GLuint VBO, VAO;

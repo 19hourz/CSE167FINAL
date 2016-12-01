@@ -31,6 +31,7 @@ public:
     ~Building();
     
     glm::mat4 toWorld;
+    Cube *block;
 
     void draw(mat4) override;
     void update() override;

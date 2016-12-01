@@ -33,6 +33,7 @@ public:
     void draw(mat4) override;
     void update() override;
     void spin();
+    void setCubeType(int);
     //    void move();
     
     // These variables are needed for the shader program
