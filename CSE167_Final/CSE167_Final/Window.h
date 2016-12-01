@@ -31,6 +31,21 @@ public:
     //Shaders
     static GLuint skyboxShader;
     static GLuint cubeShader;
+    
+    //TextureID
+    static GLuint buildingTexture;
+    static GLuint buildingTexture1;
+    static GLuint buildingTexture2;
+    static GLuint buildingTexture3;
+    static GLuint buildingTexture4;
+    static GLuint buildingTexture5;
+    static GLuint buildingTexture6;
+    static GLuint buildingTexture7;
+    static GLuint buildingTexture8;
+    static GLuint cityTexture1;
+    static GLuint cityTexture2;
+    static GLuint cityTexture3;
+    static GLuint cityTexture4;
 
 
     //Functions
