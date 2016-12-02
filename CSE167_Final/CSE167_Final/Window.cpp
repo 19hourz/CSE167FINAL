@@ -1,4 +1,5 @@
 #include "window.h"
+
 using namespace glm;
 using namespace std;
 
@@ -14,11 +15,12 @@ Cube * ground1;
 Cube * ground2;
 Cube * ground3;
 Cube * ground4;
-
 Building* building;
 Skybox* skybox;
 Plane* plane;
 Water* water;
+
+
 bool up = false;
 bool down = false;
 bool rightRot = false;
@@ -158,8 +160,8 @@ void Window::initialize_objects()
     Window::buildingTexture8 = loadTexture("./textures/Building8.ppm");
     Window::cityTexture1 = loadTexture("./textures/city1.ppm");
     Window::cityTexture2 = loadTexture("./textures/city2.ppm");
-    //cityTexture3 = loadTexture("./textures/city3.ppm");
-    //cityTexture4 = loadTexture("./textures/city3.ppm");
+    cityTexture3 = loadTexture("./textures/city3.ppm");
+    cityTexture4 = loadTexture("./textures/city4.ppm");
     
     
     srand (1);//Random seed
@@ -170,8 +172,8 @@ void Window::initialize_objects()
     mat4 flip = rotate(mat4(1.0f), glm::pi<float>(), glm::vec3(0.0f, 0.0f, 1.0f)) * translate(mat4(1.0f), vec3(-50.0f,0.0f,0.0f));
     groundPos1 = worldPos * translate(mat4(1.0f), vec3(0,0,50)) * flip * scale(mat4(1.0f), vec3(50,0.1,50));
     groundPos2 = worldPos * translate(mat4(1.0f), vec3(0,0,0)) * flip * scale(mat4(1.0f), vec3(50,0.1,50));
-    //groundPos3 = worldPos * translate(mat4(1.0f), vec3(0,0,50)) * flip * scale(mat4(1.0f), vec3(50,0.1,50));
-    //groundPos4 = worldPos * translate(mat4(1.0f), vec3(50,0,50)) * flip *scale(mat4(1.0f), vec3(50,0.1,50));
+    groundPos3 = worldPos * translate(mat4(1.0f), vec3(50,0,50)) * flip * scale(mat4(1.0f), vec3(50,0.1,50));
+    groundPos4 = worldPos * translate(mat4(1.0f), vec3(50,0,0)) * flip *scale(mat4(1.0f), vec3(50,0.1,50));
 
     
 	// Load the shader program. Make sure you have the correct filepath up top
@@ -268,7 +270,7 @@ GLFWwindow* Window::create_window(int width, int height)
 
 	// Make the context of the window
 	glfwMakeContextCurrent(window);
-
+    
 	// Set swap interval to 1
 	glfwSwapInterval(1);
 
@@ -336,8 +338,8 @@ void Window::display_callback(GLFWwindow* window)
     //Draw 4 pieces of ground
     ground1->draw(groundPos1);
     ground2->draw(groundPos2);
-    //ground3->draw(groundPos3);
-    //ground4->draw(groundPos4);
+    ground3->draw(groundPos3);
+    ground4->draw(groundPos4);
 
 	// Render the world
     world->draw(Window::worldPos);
