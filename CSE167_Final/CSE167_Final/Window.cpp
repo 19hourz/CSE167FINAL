@@ -308,7 +308,7 @@ void Window::idle_callback()
         cam_up = plane->upDirection;
         V = glm::lookAt(cam_pos, cam_look_at, cam_up);
     }else if(!godInit){
-        cam_pos = vec3(20.0f, 0.5f, 20.0f);
+        cam_pos = vec3(90.0f, 20.0f, -30.0f);
         cam_look_at = normalize(vec3(-1.0f, 0.0f, -1.0f));
         cam_up = vec3(0.0f, 1.0f, 0.0f);
         V = glm::lookAt(cam_pos, cam_look_at, cam_up);
