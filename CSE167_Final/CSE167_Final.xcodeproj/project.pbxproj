@@ -19,6 +19,7 @@
 		283355CA1DE4F21500C9D118 /* MatrixTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355C41DE4F21500C9D118 /* MatrixTransform.cpp */; };
 		283355CB1DE4F21500C9D118 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355C61DE4F21500C9D118 /* Node.cpp */; };
 		283355D21DE5066D00C9D118 /* Building.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355D01DE5066D00C9D118 /* Building.cpp */; };
+		28AA8BEE1DF105EC00BE72F0 /* OBJObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28AA8BEC1DF105EC00BE72F0 /* OBJObject.cpp */; };
 		52DB8B8C1DEE93A200B6DFAE /* Plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52DB8B8A1DEE93A200B6DFAE /* Plane.cpp */; };
 		52DB8B8F1DEFA2E400B6DFAE /* Water.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52DB8B8D1DEFA2E400B6DFAE /* Water.cpp */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,8 @@
 		283355D01DE5066D00C9D118 /* Building.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Building.cpp; sourceTree = "<group>"; };
 		283355D11DE5066D00C9D118 /* Building.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Building.h; sourceTree = "<group>"; };
 		287543991DE3FF30004C0FB2 /* CSE167_Final */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CSE167_Final; sourceTree = BUILT_PRODUCTS_DIR; };
+		28AA8BEC1DF105EC00BE72F0 /* OBJObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OBJObject.cpp; sourceTree = "<group>"; };
+		28AA8BED1DF105EC00BE72F0 /* OBJObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBJObject.h; sourceTree = "<group>"; };
 		52DB8B891DEE936300B6DFAE /* Plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plane.h; sourceTree = "<group>"; };
 		52DB8B8A1DEE93A200B6DFAE /* Plane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Plane.cpp; sourceTree = "<group>"; };
 		52DB8B8D1DEFA2E400B6DFAE /* Water.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Water.cpp; sourceTree = "<group>"; };
@@ -125,6 +128,8 @@
 				283355C21DE4F21500C9D118 /* Group.cpp */,
 				283355C51DE4F21500C9D118 /* MatrixTransform.h */,
 				283355C41DE4F21500C9D118 /* MatrixTransform.cpp */,
+				28AA8BED1DF105EC00BE72F0 /* OBJObject.h */,
+				28AA8BEC1DF105EC00BE72F0 /* OBJObject.cpp */,
 				283355BE1DE4D5CA00C9D118 /* Skybox.h */,
 				283355BD1DE4D5CA00C9D118 /* Skybox.cpp */,
 				283355AB1DE4CD0200C9D118 /* Cube.h */,
@@ -178,7 +183,7 @@
 				TargetAttributes = {
 					287543981DE3FF30004C0FB2 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 5YFX8A6H5D;
+						DevelopmentTeam = RY5642NV8L;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -209,6 +214,7 @@
 				283355B61DE4CD0200C9D118 /* shader.cpp in Sources */,
 				283355B51DE4CD0200C9D118 /* main.cpp in Sources */,
 				283355D21DE5066D00C9D118 /* Building.cpp in Sources */,
+				28AA8BEE1DF105EC00BE72F0 /* OBJObject.cpp in Sources */,
 				52DB8B8C1DEE93A200B6DFAE /* Plane.cpp in Sources */,
 				283355C81DE4F21500C9D118 /* Geode.cpp in Sources */,
 				283355B41DE4CD0200C9D118 /* Cube.cpp in Sources */,
@@ -314,7 +320,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				DEVELOPMENT_TEAM = 5YFX8A6H5D;
+				DEVELOPMENT_TEAM = RY5642NV8L;
 				HEADER_SEARCH_PATHS = (
 					"/Developer/glfw-3.2.1/include",
 					/Developer/glm,
@@ -328,7 +334,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				DEVELOPMENT_TEAM = 5YFX8A6H5D;
+				DEVELOPMENT_TEAM = RY5642NV8L;
 				HEADER_SEARCH_PATHS = (
 					"/Developer/glfw-3.2.1/include",
 					/Developer/glm,

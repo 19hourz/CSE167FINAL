@@ -18,6 +18,9 @@
 #include "Building.h"
 #include "Plane.h"
 #include "Water.h"
+#include "OBJObject.h"
+
+
 class Window
 {
 public:
