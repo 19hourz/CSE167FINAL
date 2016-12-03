@@ -36,7 +36,7 @@ public:
     static GLuint skyboxShader;
     static GLuint cubeShader;
     static GLuint waterShader;
-    
+    static GLuint planeShader;
     //TextureID
     static GLuint buildingTexture;
     static GLuint buildingTexture1;

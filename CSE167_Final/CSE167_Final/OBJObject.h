@@ -71,7 +71,7 @@ public:
 	OBJObject(const char* filepath);
     ~OBJObject();
 	void parse(const char* filepath);
-	void draw(GLuint);
+	void draw(glm::mat4);
     void update();
     void spin(float);
     void move(float,float,float);

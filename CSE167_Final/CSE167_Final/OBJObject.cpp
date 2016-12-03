@@ -17,15 +17,8 @@ OBJObject::OBJObject(const char *filepath)
     pointSize = 1.0f;
 
 	parse(filepath);
-    if (strcmp(filepath, "bunny.obj")){
-        target_obj = 1;
-    }
-    else if (strcmp(filepath, "bear.obj")){
-        target_obj = 2;
-    }
-    else{
-        target_obj = 3;
-    }
+    target_obj = 1;
+
     
     // Create array object and buffers. Remember to delete your buffers when the object is destroyed!
     glGenVertexArrays(1, &VAO);
@@ -207,41 +200,28 @@ void OBJObject::parse(const char *filepath)
     
 }
 
-void OBJObject::draw(GLuint shaderProgram)
+void OBJObject::draw(glm::mat4 mat)
 {
-    // Calculate the combination of the model and view (camera inverse) matrices
-    glm::mat4 modelview = Window::V * toWorld;
-    GLuint uModel = glGetUniformLocation(shaderProgram, "model");
-   
-    
-    // We need to calcullate this because modern OpenGL does not keep track of any matrix other than the viewport (D)
-    // Consequently, we need to forward the projection, view, and model matrices to the shader programs
-    // Get the location of the uniform variables "projection" and "modelview"
-    uProjection = glGetUniformLocation(shaderProgram, "projection");
-    uModelview = glGetUniformLocation(shaderProgram, "modelview");
-    uModel = glGetUniformLocation(shaderProgram, "model");
-    
-    
-    GLint viewPosLoc = glGetUniformLocation(shaderProgram, "viewPos");
-    glUniform3f(viewPosLoc, 0.0f, 0.0f, 20.0f);
-    
-    
-    // Now send these values to the shader program
-    glUniformMatrix4fv(uProjection, 1, GL_FALSE, &Window::P[0][0]);
-    glUniformMatrix4fv(uModelview, 1, GL_FALSE, &modelview[0][0]);
-    glUniformMatrix4fv(uModel, 1, GL_FALSE, &toWorld[0][0]);
+    glUseProgram(Window::planeShader);
+    glm::mat4 model = mat * toWorld;
+    glm::mat4 modelview = Window::V * mat * toWorld;
+
+    glUniformMatrix4fv(glGetUniformLocation(Window::planeShader, "projection"), 1, GL_FALSE, &Window::P[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(Window::planeShader, "modelview"), 1, GL_FALSE, &modelview[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(Window::planeShader, "view"), 1, GL_FALSE, &toWorld[0][0]);
+    //glUniform3f(glGetUniformLocation(Window::planeShader, "cameraPos"), Window::cam_pos.x, Window::cam_pos.y, Window::cam_pos.z);
     // Now draw the cube. We simply need to bind the VAO associated with it.
     glBindVertexArray(VAO);
     // Tell OpenGL to draw with triangles, using 36 indices, the type of the indices, and the offset to start from
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
     // Unbind the VAO when we're done so we don't accidentally draw extra stuff or tamper with its bound buffers
     glBindVertexArray(0);
-
+    
 }
 
 void OBJObject::update()
 {
-    spin(1.0f);
+    //spin(1.0f);
 }
 
 //Additional Feature Functions
@@ -273,41 +253,3 @@ void OBJObject::orbit(float deg,vec3 axis)
 void OBJObject::reset(){
     this->toWorld = glm::mat4(1.0f);
 }
-
-/*
-void OBJObject::smaller_pointSize()
-{
-    this->pointSize = this->pointSize - 1.0;
-    glPointSize(this->pointSize);
-    draw();
-}
-
-void OBJObject::larger_pointSize()
-{
-    this->pointSize = this->pointSize + 1.0;
-    glPointSize(this->pointSize);
-    draw();
-}
-
-void OBJObject::move(float x, float y, float z)
-{
-    this->toWorld = glm::translate(glm::mat4(1.0f), glm::vec3(x,y,z)) * this->toWorld;
-}
-
-void OBJObject::scale(float size)
-{
-    this->toWorld =  this->toWorld * glm::scale(glm::mat4(1.0f), glm::vec3(size,size,size));
-}
-
-void OBJObject::orbit(float deg)
-{
-    this->toWorld = glm::rotate(glm::mat4(1.0f), deg/180.0f * glm::pi<float>(), glm::vec3(0.0f, 0.0f, 1.0f)) * this->toWorld;
-}
-
-void OBJObject::reset_pointSize()
-{
-    this->pointSize = 1.0f;
-    glPointSize(1.0f);
-    draw();
-}
-*/

@@ -33,13 +33,15 @@ bool godInit = false;
 GLuint Window::skyboxShader;
 GLuint Window::cubeShader;
 GLuint Window::waterShader;
+GLuint Window::planeShader;
 #define SKYBOX_VERTEX_SHADER_PATH "./Shaders/skybox.vert"
 #define SKYBOX_FRAGMENT_SHADER_PATH "./Shaders/skybox.frag"
 #define CUBE_VERTEX_SHADER_PATH "./Shaders/cube.vert"
 #define CUBE_FRAGMENT_SHADER_PATH "./Shaders/cube.frag"
 #define WATER_VERTEX_SHADER_PATH "./Shaders/water.vert"
 #define WATER_FRAGMENT_SHADER_PATH "./Shaders/water.frag"
-
+#define PLANE_VERTEX_SHADER_PATH "./shader.vert"
+#define PLANE_FRAG_SHADER_PATH "./shader.frag"
 
 // Default camera parameters
 vec3 Window::cam_pos(0.0f, 0.5f, 0.0f);		// e  | Position of camera
@@ -180,7 +182,7 @@ void Window::initialize_objects()
     Window::skyboxShader = LoadShaders(SKYBOX_VERTEX_SHADER_PATH, SKYBOX_FRAGMENT_SHADER_PATH);
     Window::cubeShader = LoadShaders(CUBE_VERTEX_SHADER_PATH, CUBE_FRAGMENT_SHADER_PATH);
     Window::waterShader = LoadShaders(WATER_VERTEX_SHADER_PATH, WATER_FRAGMENT_SHADER_PATH);
-    
+    Window::planeShader = LoadShaders(PLANE_VERTEX_SHADER_PATH, PLANE_FRAG_SHADER_PATH);
     world = new Group();
     cube = new Cube(1);
     ground1 = new Cube(2);

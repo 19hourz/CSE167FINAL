@@ -10,8 +10,8 @@ uniform sampler2D dudvTexture;
 uniform float move;
 void main()
 {
-    vec2 distortion = texture(dudvTexture, vec2(textureCoords.x + move,textureCoords.y)).rg * 2.0 - 1.0;
-    vec2 distortionAgain = texture(dudvTexture, vec2(move - textureCoords.x,textureCoords.y + move)).rg * 2.0 - 1.0;
+    vec2 distortion = (texture(dudvTexture, vec2(textureCoords.x + move,textureCoords.y)).rg * 2.0 - 1.0)*0.1;
+    vec2 distortionAgain = (texture(dudvTexture, vec2(move - textureCoords.x,textureCoords.y + move)).rg * 2.0 - 1.0)*0.15;
     distortion += distortionAgain;
     vec4 reflectColor;
     vec4 refractColor;
