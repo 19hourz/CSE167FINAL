@@ -31,8 +31,8 @@ void Plane::draw(mat4 C)
     mat4 transform2 = translate(mat4(1.0f), vec3(0.005f, 0.075f, 0.0025f)) * rotate(mat4(1.0f), deg, oriDirec) * scale(mat4(1.0f), vec3(0.01,0.15,0.005)) * translate(mat4(1.0f), vec3(-0.5f, -0.5f, -0.5f));
     vec3 rotAxis = cross(upDirection, direction);
     rotAxis = normalize(rotAxis);
-    transform1 =  translate(mat4(1.0f), vec3(0.1f*rotAxis.x + 0.145f*direction.x - 0.01*upDirection.x, 0.1f*rotAxis.y + 0.145f*direction.y - 0.01*upDirection.y, 0.1f*rotAxis.z + 0.145f*direction.z - 0.01*upDirection.z)) * translate(mat4(1.0f), center) * rotation * transform1;
-    transform2 =  translate(mat4(1.0f), vec3(-0.1f*rotAxis.x + 0.145f*direction.x - 0.01*upDirection.x, -0.1f*rotAxis.y + 0.145f*direction.y - 0.01*upDirection.y, -0.1f*rotAxis.z + 0.145f*direction.z - 0.01*upDirection.z)) * translate(mat4(1.0f), center) * rotation * transform2;
+    transform1 =  translate(mat4(1.0f), vec3(0.2f*rotAxis.x + 0.145f*direction.x - 0.03*upDirection.x, 0.2f*rotAxis.y + 0.145f*direction.y - 0.03*upDirection.y, 0.2f*rotAxis.z + 0.145f*direction.z - 0.03*upDirection.z)) * translate(mat4(1.0f), center) * rotation * transform1;
+    transform2 =  translate(mat4(1.0f), vec3(-0.2f*rotAxis.x + 0.145f*direction.x - 0.03*upDirection.x, -0.2f*rotAxis.y + 0.145f*direction.y - 0.03*upDirection.y, -0.2f*rotAxis.z + 0.145f*direction.z - 0.03*upDirection.z)) * translate(mat4(1.0f), center) * rotation * transform2;
     mat4 movement = translate(mat4(1.0f), center) * rotation;
     
     propeller->draw(movement);
