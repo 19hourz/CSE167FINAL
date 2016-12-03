@@ -18,6 +18,7 @@
 #include <stdio.h>      /* printf, scanf, puts, NULL */
 #include <stdlib.h>     /* srand, rand */
 #include <vector>
+#include "OBJObject.h"
 
 
 class Plane :public Geode{
