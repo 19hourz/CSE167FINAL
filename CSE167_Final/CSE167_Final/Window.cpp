@@ -63,7 +63,6 @@ bool camShouldMove;
 bool Window::shouldRebuild;
 mat4 groundPos1,groundPos2,groundPos3,groundPos4;
 std::vector<Building*> buildings;
-std::vector<vec3> buildingPos;
 
 
 
@@ -151,10 +150,25 @@ GLuint loadTexture(GLchar* path)
     return textureID;
 }
 
-bool checkCollision(Building* a, Plane* b){
+bool checkCollision(Building* buildingObj, Plane* planeObj){
 
-    return false;
+    vector<vec3> cornerPoints = buildingObj->getCornerPoints();
+    vector<vec3> blockSizes = buildingObj->getBlockSizes();
+    vec3 buildingPos = buildingObj->getBuildingPos();
+    vec3 planeCenter = planeObj->getCenter();
     
+    for(int i = 0; i < cornerPoints.size(); i++){
+        bool collisionX = cornerPoints.at(i).x + buildingPos.x + blockSizes.at(i).x >= planeCenter.x - 0.5f &&
+        planeCenter.x + 0.5f >= cornerPoints.at(i).x + buildingPos.x;
+        bool collisionY = cornerPoints.at(i).y + buildingPos.y + blockSizes.at(i).y >= planeCenter.y - 0.5f &&
+        planeCenter.y + 0.5f >= cornerPoints.at(i).y + buildingPos.y;
+        bool collisionZ = cornerPoints.at(i).z + buildingPos.z + blockSizes.at(i).z >= planeCenter.x - 0.5f &&
+        planeCenter.z + 0.5f >= cornerPoints.at(i).z + buildingPos.z;
+        if(collisionX && collisionY && collisionZ) return true;
+        //printf("%f %f",cornerPoints.at(i).x + buildingPos.x + blockSizes.at(i).x,planeCenter.x - 0.5f);
+    }
+    
+    return false;
 }
 
 
@@ -375,8 +389,14 @@ void Window::display_callback(GLFWwindow* window)
 	// Render the world
     world->draw(Window::worldPos);
     
+    for (int i = 0; i < buildings.size(); i++){
+        if (checkCollision(buildings.at(i), plane)){
+            plane->airSpeed = 0.0f;
+            break;
+            cout << "!!!!!" << endl;
+        }
+    }
     
-
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
 	// Swap buffers
