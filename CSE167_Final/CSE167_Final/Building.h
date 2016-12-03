@@ -25,6 +25,9 @@ class Cube;
 class Building :public Geode{
 protected:
     std::vector<glm::mat4> blocksPos;
+    std::vector<glm::vec3> blockSizes;
+    std::vector<glm::vec3> cornerPoints;
+    glm::vec3 buildingPos;
     
 public:
     Building();
@@ -35,6 +38,11 @@ public:
 
     void draw(mat4) override;
     void update() override;
+    std::vector<glm::vec3> getBlockSizes();
+    std::vector<glm::vec3> getCornerPoints();
+    void moveCornerPoints(vec3);
+    void moveBuildingPos(vec3);
+    glm::vec3 getBuildingPos();
     void randBuilding();
     
 
