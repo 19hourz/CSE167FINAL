@@ -20,7 +20,6 @@ void setup_callbacks()
     // Set the mouse callback
     glfwSetCursorPosCallback(window, Window::mouse_move_callback);
     glfwSetMouseButtonCallback(window, Window::mouse_button_callback);
-    glfwSetScrollCallback(window, Window::scroll_callback);
 }
 
 void setup_glew()
