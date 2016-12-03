@@ -19,10 +19,14 @@
 #include "Plane.h"
 #include "Water.h"
 #include "OBJObject.h"
+#include <vector>
 
 
 class Window
 {
+    
+    
+
 public:
     //Variables
     static glm::mat4 worldPos;
@@ -32,6 +36,7 @@ public:
 	static glm::mat4 V; // V for view
     static bool shouldRebuild;
     static vec3 cam_pos;
+
     //Shaders
     static GLuint skyboxShader;
     static GLuint cubeShader;

@@ -60,6 +60,8 @@ double lastY;
 bool camShouldMove;
 bool Window::shouldRebuild;
 mat4 groundPos1,groundPos2,groundPos3,groundPos4;
+std::vector<Building*> buildings;
+std::vector<vec3> buildingPos;
 
 
 
@@ -147,6 +149,12 @@ GLuint loadTexture(GLchar* path)
     return textureID;
 }
 
+bool checkCollision(Building* a, Plane* b){
+
+    return false;
+    
+}
+
 
 void Window::initialize_objects()
 {
@@ -207,10 +215,16 @@ void Window::initialize_objects()
     for(int i = 0; i < 4; i++){
         for(int j = 0; j < 11; j++){
             Group* community = new Group();
+            vector<Building*> communityBuildings;
+            communityBuildings.clear();
             for(int a = 0; a < 2; a++){
                 for(int b = 0; b < 2; b++){
                     MatrixTransform *trans = new MatrixTransform(translate(mat4(1.0f), vec3(5.0f*a, 0.0, 3.0f*b)));
-                    trans->addChild(new Building());
+                    Building* curBuilding = new Building();
+                    curBuilding->moveBuildingPos(vec3(5.0f*a, 0.0, 3.0f*b) +  vec3(1.5f, 0.0, 0.5f));
+                    buildings.push_back(curBuilding);
+                    communityBuildings.push_back(curBuilding);
+                    trans->addChild(curBuilding);
                     community->addChild(trans);
                 }
             }
@@ -222,11 +236,14 @@ void Window::initialize_objects()
             MatrixTransform *pos = new MatrixTransform(translate(mat4(1.0f), vec3(13.0f*i, 0.0, 8.5*j + extra)));
             shift->addChild(pos);
             pos->addChild(community);
+            for(int i = 0; i < communityBuildings.size(); i++){
+                communityBuildings.at(i)->moveBuildingPos(vec3(13.0f*i, 0.0, 8.5*j + extra));
+            }
         }
     }
-
-	
 }
+
+
 
 // Treat this as a destructor function. Delete dynamically allocated memory here.
 void Window::clean_up()
@@ -345,11 +362,16 @@ void Window::display_callback(GLFWwindow* window)
 
 	// Render the world
     world->draw(Window::worldPos);
+    
+    
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
 	// Swap buffers
 	glfwSwapBuffers(window);
+    
+    
+    
 }
 
 
