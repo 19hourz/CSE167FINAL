@@ -29,6 +29,8 @@ bool accelerate = false;
 bool deccelerate = false;
 bool planeView = true;
 bool godInit = false;
+bool zoomIn = false;
+bool zoomOut = false;
 //Shaders
 GLuint Window::skyboxShader;
 GLuint Window::cubeShader;
@@ -322,8 +324,8 @@ void Window::idle_callback()
         cam_pos = plane->center;
         cam_look_at = cam_pos + tempDirec;
         tempDirec = normalize(tempDirec);
-        GLfloat pos = 0.2;
-        cam_pos = plane->center - pos * tempDirec;
+        //GLfloat pos = 2.0;
+        cam_pos = plane->center - tempDirec;
         cam_up = plane->upDirection;
         V = glm::lookAt(cam_pos, cam_look_at, cam_up);
     }else if(!godInit){
@@ -340,6 +342,16 @@ void Window::idle_callback()
     if (rightRot) plane->rightRot();
     if (accelerate) plane->speedUp();
     if (deccelerate) plane->speedDown();
+    if (zoomIn){
+        glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
+        cam_pos = cam_pos - direction;
+        V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+    }
+    else if(zoomOut){
+        glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
+        cam_pos = cam_pos + direction;
+        Window::V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+    }
 }
 
 void Window::display_callback(GLFWwindow* window)
@@ -414,19 +426,11 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
         }
         
         else if (key == GLFW_KEY_E){
-            glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
-            cam_pos = cam_pos - direction;
-            V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+            zoomIn = true;
         }
         else if (key == GLFW_KEY_Q){
-            glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
-            cam_pos = cam_pos + direction;
-            Window::V = glm::lookAt(cam_pos, cam_look_at, cam_up);
+            zoomOut = true;
         }
-
-        
-        
-        
 		// Check if escape was pressed
 		if (key == GLFW_KEY_ESCAPE)
 		{
@@ -453,6 +457,12 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
         }
         else if (key == GLFW_KEY_UP){
             accelerate = false;
+        }
+        else if (key == GLFW_KEY_E){
+            zoomIn = false;
+        }
+        else if (key == GLFW_KEY_Q){
+            zoomOut = false;
         }
     }
 }
@@ -494,9 +504,4 @@ void Window::mouse_move_callback(GLFWwindow* window, double xpos, double ypos){
         lastX = xpos;
         lastY = ypos;
     }
-}
-
-void Window::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-    
 }
