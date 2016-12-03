@@ -151,21 +151,27 @@ GLuint loadTexture(GLchar* path)
 }
 
 bool checkCollision(Building* buildingObj, Plane* planeObj){
+    //Window::worldPos = translate(mat4(1.0f), vec3(-50,0,-50));
 
     vector<vec3> cornerPoints = buildingObj->getCornerPoints();
     vector<vec3> blockSizes = buildingObj->getBlockSizes();
     vec3 buildingPos = buildingObj->getBuildingPos();
-    vec3 planeCenter = planeObj->getCenter();
+    vec3 planeCenter = planeObj->getCenter() + vec3(50,0,50);
     
+//    printf("planeCenter: %f %f %f \n",planeCenter.x,planeCenter.y,planeCenter.z);
+//    printf("buildingPos: %f %f %f \n",buildingPos.x,buildingPos.y,buildingPos.z);
+
     for(int i = 0; i < cornerPoints.size(); i++){
         bool collisionX = cornerPoints.at(i).x + buildingPos.x + blockSizes.at(i).x >= planeCenter.x - 0.5f &&
         planeCenter.x + 0.5f >= cornerPoints.at(i).x + buildingPos.x;
         bool collisionY = cornerPoints.at(i).y + buildingPos.y + blockSizes.at(i).y >= planeCenter.y - 0.5f &&
         planeCenter.y + 0.5f >= cornerPoints.at(i).y + buildingPos.y;
-        bool collisionZ = cornerPoints.at(i).z + buildingPos.z + blockSizes.at(i).z >= planeCenter.x - 0.5f &&
+        bool collisionZ = cornerPoints.at(i).z + buildingPos.z + blockSizes.at(i).z >= planeCenter.z - 0.5f &&
         planeCenter.z + 0.5f >= cornerPoints.at(i).z + buildingPos.z;
         if(collisionX && collisionY && collisionZ) return true;
-        //printf("%f %f",cornerPoints.at(i).x + buildingPos.x + blockSizes.at(i).x,planeCenter.x - 0.5f);
+//        printf("cornerPos: %f %f %f \n",cornerPoints.at(i).x,cornerPoints.at(i).y,cornerPoints.at(i).z);
+//        printf("blockSizes: %f %f %f \n",blockSizes.at(i).x,blockSizes.at(i).y,blockSizes.at(i).z);
+
     }
     
     return false;
@@ -223,11 +229,15 @@ void Window::initialize_objects()
     //plane->propellerSpeed = 0.05;
     // Build world
 //    world->addChild(cube);
-    //world->addChild(building);
+//    world->addChild(building);
+    
+    
+    
     
     //Construct City
     MatrixTransform* shift = new MatrixTransform(translate(mat4(1.0f), vec3(1.5f, 0.0, 0.5f)));
     world->addChild(shift);
+    //4, 11
     for(int i = 0; i < 4; i++){
         for(int j = 0; j < 11; j++){
             Group* community = new Group();
@@ -252,8 +262,8 @@ void Window::initialize_objects()
             MatrixTransform *pos = new MatrixTransform(translate(mat4(1.0f), vec3(13.0f*i, 0.0, 8.5*j + extra)));
             shift->addChild(pos);
             pos->addChild(community);
-            for(int i = 0; i < communityBuildings.size(); i++){
-                communityBuildings.at(i)->moveBuildingPos(vec3(13.0f*i, 0.0, 8.5*j + extra));
+            for(int c = 0; c < communityBuildings.size(); c++){
+                communityBuildings.at(c)->moveBuildingPos(vec3(13.0f*i, 0.0, 8.5*j + extra));
             }
         }
     }
@@ -366,6 +376,19 @@ void Window::idle_callback()
         cam_pos = cam_pos + direction;
         Window::V = glm::lookAt(cam_pos, cam_look_at, cam_up);
     }
+    
+    
+    for (int i = 0; i < buildings.size(); i++){
+        if (checkCollision(buildings.at(i), plane)){
+            plane->airSpeed = 0.0f;
+            break;
+            cout << "!!!!!" << endl;
+        }
+    }
+
+    
+
+    
 }
 
 void Window::display_callback(GLFWwindow* window)
@@ -389,19 +412,12 @@ void Window::display_callback(GLFWwindow* window)
 	// Render the world
     world->draw(Window::worldPos);
     
-    for (int i = 0; i < buildings.size(); i++){
-        if (checkCollision(buildings.at(i), plane)){
-            plane->airSpeed = 0.0f;
-            break;
-            cout << "!!!!!" << endl;
-        }
-    }
+
     
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
 	// Swap buffers
 	glfwSwapBuffers(window);
-    
     
     
 }
