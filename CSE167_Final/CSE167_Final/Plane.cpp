@@ -120,3 +120,19 @@ void Plane::leftRot()
     upDirection = vec3(tempup.x, tempup.y, tempup.z);
     rotation = rotate(mat4(1.0f), -rdeg * pi<GLfloat>() /180.0f, direction) * rotation;
 }
+
+vec3 Plane::getCenter(){
+    
+    return center;
+
+}
+
+
+
+
+
+
+
+
+
+

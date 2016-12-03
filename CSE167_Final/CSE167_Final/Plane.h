@@ -37,6 +37,7 @@ public:
     void update() override;
     GLfloat speedUp();
     GLfloat speedDown();
+    glm::vec3 getCenter();
     void up();
     void down();
     void leftRot();
