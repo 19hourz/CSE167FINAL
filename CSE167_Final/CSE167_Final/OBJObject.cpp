@@ -204,19 +204,16 @@ void OBJObject::draw(glm::mat4 mat)
 {
     glUseProgram(Window::planeShader);
     glm::mat4 model = mat * toWorld;
-    glm::mat4 modelview = Window::V * mat * toWorld;
-
     glUniformMatrix4fv(glGetUniformLocation(Window::planeShader, "projection"), 1, GL_FALSE, &Window::P[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(Window::planeShader, "modelview"), 1, GL_FALSE, &modelview[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(Window::planeShader, "view"), 1, GL_FALSE, &toWorld[0][0]);
-    //glUniform3f(glGetUniformLocation(Window::planeShader, "cameraPos"), Window::cam_pos.x, Window::cam_pos.y, Window::cam_pos.z);
+    glUniformMatrix4fv(glGetUniformLocation(Window::planeShader, "model"), 1, GL_FALSE, &model[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(Window::planeShader, "view"), 1, GL_FALSE, &Window::V[0][0]);
+    glUniform3f(glGetUniformLocation(Window::planeShader, "cameraPos"), Window::cam_pos.x, Window::cam_pos.y, Window::cam_pos.z);
     // Now draw the cube. We simply need to bind the VAO associated with it.
     glBindVertexArray(VAO);
     // Tell OpenGL to draw with triangles, using 36 indices, the type of the indices, and the offset to start from
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
     // Unbind the VAO when we're done so we don't accidentally draw extra stuff or tamper with its bound buffers
     glBindVertexArray(0);
-    
 }
 
 void OBJObject::update()
