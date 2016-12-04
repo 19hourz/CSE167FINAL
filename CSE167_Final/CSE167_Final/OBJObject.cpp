@@ -77,38 +77,13 @@ OBJObject::OBJObject(const char *filepath)
     glBindVertexArray(0);
     
     
-    //Bound Sphere
-//    int SEGMENTS = 10;
-//    GLfloat r = 2;
-//    if (type == 1 || type == 2){
-//        r = 2;
-//    }
-//    else{
-//        r = 4;
-//    }
-    
-    
-//    for(int j = -SEGMENTS/2; j < 5 * SEGMENTS/2; j++){
-//        float dist = glm::abs(2.0 * r * j / (GLfloat)SEGMENTS);
-//        float tempr = glm::sqrt(r*r - dist*dist);
-//        for (int i = 0; i <= 4 * SEGMENTS; i++){
-//            float angle = 2 * glm::pi<float>() * i / SEGMENTS;
-//            float next_angle = 2 * glm::pi<float>() * (i + 1) / SEGMENTS;
-//            float x1 = cos(angle) * tempr;
-//            float y1 = sin(angle) * tempr;
-//            float x2 = cos(next_angle) * tempr;
-//            float y2 = sin(next_angle) * tempr;
-//            points.push_back(glm::vec3(x1, y1, 2.0 * r * j / (GLfloat)SEGMENTS));
-//            points.push_back(glm::vec3(x2, y2, 2.0 * r * j / (GLfloat)SEGMENTS));
-//        }
-//    }
     
 
     
-    int numStack = 10;
+    int numStack = 100;
     points.clear();
     for (int j = 0; j <= numStack; j++){
-        float height = -0.5f + 0.1*j;
+        float height = -0.5f + 0.01*j;
         points.push_back(-0.5);points.push_back(height);points.push_back(-0.5);
         points.push_back(-0.5);points.push_back(height);points.push_back(0.5);
         points.push_back(0.5);points.push_back(height);points.push_back(0.5);
