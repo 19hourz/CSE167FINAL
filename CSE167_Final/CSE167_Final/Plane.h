@@ -19,29 +19,31 @@
 #include <stdlib.h>     /* srand, rand */
 #include <vector>
 #include "OBJObject.h"
-
-
+#define MAX_THROTTLE 3.0
+#define MAX_SPEED 0.2
 class Plane :public Geode{
 protected:
 public:
     glm::vec3 center;
     glm::vec3 direction;
+    glm::vec3 velocity;
     glm::vec3 upDirection;
     Plane();
     ~Plane();
     GLfloat deg;
     glm::mat4 toWorld;
-    GLfloat airSpeed = 0.01;
-    GLfloat propellerSpeed = 1.0;
+    GLfloat airSpeed = 0.0;
+    GLfloat propellerSpeed = 0.0;
     void draw(mat4) override;
     void update() override;
-    GLfloat speedUp();
-    GLfloat speedDown();
+    GLfloat speedUp(GLfloat);
+    GLfloat speedDown(GLfloat);
     glm::vec3 getCenter();
-    void up();
-    void down();
-    void leftRot();
-    void rightRot();
+    void up(GLfloat);
+    void down(GLfloat);
+    void leftRot(GLfloat);
+    void rightRot(GLfloat);
+    void reset();
 };
 
 

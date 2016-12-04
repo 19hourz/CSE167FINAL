@@ -3,7 +3,7 @@
 using namespace glm;
 using namespace std;
 
-const char* window_title = "GLFW Starter Project";
+const char* window_title = "PROPELLER PLANE SIMULATER";
 //Texture variables
 GLuint Window::buildingTexture,Window::buildingTexture1,Window::buildingTexture2,Window::buildingTexture3,Window::buildingTexture4;
 GLuint Window::buildingTexture5,Window::buildingTexture6,Window::buildingTexture7,Window::buildingTexture8;
@@ -160,14 +160,12 @@ bool checkCollision(Building* buildingObj, Plane* planeObj){
     for(int i = 0; i < cornerPoints.size(); i++){
         bool collisionX = cornerPoints.at(i).x + buildingPos.x + blockSizes.at(i).x >= planeCenter.x - 0.5f &&
         planeCenter.x + 0.5f >= cornerPoints.at(i).x + buildingPos.x;
-        bool collisionY = cornerPoints.at(i).y + buildingPos.y + blockSizes.at(i).y >= planeCenter.y - 0.5f &&
+        bool collisionY = cornerPoints.at(i).y + blockSizes.at(i).y >= planeCenter.y - 0.5f &&
         planeCenter.y + 0.5f >= cornerPoints.at(i).y + buildingPos.y;
         bool collisionZ = cornerPoints.at(i).z + buildingPos.z + blockSizes.at(i).z >= planeCenter.x - 0.5f &&
         planeCenter.z + 0.5f >= cornerPoints.at(i).z + buildingPos.z;
         if(collisionX && collisionY && collisionZ) return true;
-        //printf("%f %f",cornerPoints.at(i).x + buildingPos.x + blockSizes.at(i).x,planeCenter.x - 0.5f);
     }
-    
     return false;
 }
 
@@ -350,12 +348,12 @@ void Window::idle_callback()
         godInit = true;
     }
     world->update();
-    if (up) plane->up();
-    if (down) plane->down();
-    if (leftRot) plane->leftRot();
-    if (rightRot) plane->rightRot();
-    if (accelerate) plane->speedUp();
-    if (deccelerate) plane->speedDown();
+    if (up) plane->up(1);
+    if (down) plane->down(1);
+    if (leftRot) plane->leftRot(1);
+    if (rightRot) plane->rightRot(1);
+    if (accelerate) plane->speedUp(0.01);
+    if (deccelerate) plane->speedDown(0.01);
     if (zoomIn){
         glm::vec3 direction = glm::normalize(cam_look_at - cam_pos);
         cam_pos = cam_pos - direction;
@@ -389,13 +387,13 @@ void Window::display_callback(GLFWwindow* window)
 	// Render the world
     world->draw(Window::worldPos);
     
-    for (int i = 0; i < buildings.size(); i++){
-        if (checkCollision(buildings.at(i), plane)){
-            plane->airSpeed = 0.0f;
-            break;
-            cout << "!!!!!" << endl;
-        }
-    }
+//    for (int i = 0; i < buildings.size(); i++){
+//        if (checkCollision(buildings.at(i), plane)){
+//            plane->airSpeed = 0.0f;
+//            break;
+//            cout << "!!!!!" << endl;
+//        }
+//    }
     
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();
@@ -429,6 +427,9 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
         }
         else if (key == GLFW_KEY_UP){
             accelerate = true;
+        }
+        else if (key == GLFW_KEY_R){
+            plane->reset();
         }
         
         //Regenerate buildings
