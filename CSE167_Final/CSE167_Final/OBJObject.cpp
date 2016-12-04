@@ -9,8 +9,12 @@ using namespace std;
 using namespace glm;
 
 
-OBJObject::OBJObject(const char *filepath) 
+
+
+OBJObject::OBJObject(const char *filepath)
 {
+
+    
     toWorld = glm::mat4(1.0f);
     angle = 0.0f;
     square_point_size = 0;
@@ -71,6 +75,65 @@ OBJObject::OBJObject(const char *filepath)
     // Unbind the VAO now so we don't accidentally tamper with it.
     // NOTE: You must NEVER unbind the element array buffer associated with a VAO!
     glBindVertexArray(0);
+    
+    
+    //Bound Sphere
+//    int SEGMENTS = 10;
+//    GLfloat r = 2;
+//    if (type == 1 || type == 2){
+//        r = 2;
+//    }
+//    else{
+//        r = 4;
+//    }
+    
+    
+//    for(int j = -SEGMENTS/2; j < 5 * SEGMENTS/2; j++){
+//        float dist = glm::abs(2.0 * r * j / (GLfloat)SEGMENTS);
+//        float tempr = glm::sqrt(r*r - dist*dist);
+//        for (int i = 0; i <= 4 * SEGMENTS; i++){
+//            float angle = 2 * glm::pi<float>() * i / SEGMENTS;
+//            float next_angle = 2 * glm::pi<float>() * (i + 1) / SEGMENTS;
+//            float x1 = cos(angle) * tempr;
+//            float y1 = sin(angle) * tempr;
+//            float x2 = cos(next_angle) * tempr;
+//            float y2 = sin(next_angle) * tempr;
+//            points.push_back(glm::vec3(x1, y1, 2.0 * r * j / (GLfloat)SEGMENTS));
+//            points.push_back(glm::vec3(x2, y2, 2.0 * r * j / (GLfloat)SEGMENTS));
+//        }
+//    }
+    
+//    GLfloat boxVertices[] = {
+//        //front
+//        -2.0, -2.0,  2.0,
+//        2.0, -2.0,  2.0,
+//        2.0,  2.0,  2.0,
+//        -2.0,  2.0,  2.0,
+//        // "Back" vertices
+//        -2.0, -2.0, -2.0,
+//        2.0, -2.0, -2.0,
+//        2.0,  2.0, -2.0,
+//        -2.0,  2.0, -2.0
+//    };
+    
+    points.push_back(vec3(-0.5,-0.5,0.5));points.push_back(vec3(0.5,-0.5,0.5));points.push_back(vec3(0.5,-0.5,0.5));points.push_back(vec3(0.5,0.5,0.5));points.push_back(vec3(-0.5,0.5,0.5));
+    points.push_back(vec3(-0.5,-0.5,-0.5));points.push_back(vec3(0.5,-0.5,-0.5));points.push_back(vec3(0.5,0.5,-0.5));points.push_back(vec3(-0.5,0.5,-0.5));
+
+    
+    glBindVertexArray(0);
+    glGenVertexArrays(1, &CAO);
+    glGenBuffers(1, &CBO);
+    glBindVertexArray(CAO);
+    glBindBuffer(GL_ARRAY_BUFFER, CBO);
+    glBufferData(GL_ARRAY_BUFFER, points.size()*sizeof(GLfloat), &points[0], GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0,
+                          3,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          3 * sizeof(GLfloat),
+                          (GLvoid*)0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 }
 
@@ -213,6 +276,16 @@ void OBJObject::draw(glm::mat4 mat)
     // Tell OpenGL to draw with triangles, using 36 indices, the type of the indices, and the offset to start from
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
     // Unbind the VAO when we're done so we don't accidentally draw extra stuff or tamper with its bound buffers
+    glBindVertexArray(0);
+    
+    glm::mat4 modelview = Window::V * mat * toWorld;
+    glUseProgram(Window::cubeShader);
+    uProjection = glGetUniformLocation(Window::cubeShader, "projection");
+    uModelview = glGetUniformLocation(Window::cubeShader, "modelview");
+    glUniformMatrix4fv(uProjection, 1, GL_FALSE, &Window::P[0][0]);
+    glUniformMatrix4fv(uModelview, 1, GL_FALSE, &modelview[0][0]);
+    glBindVertexArray(CAO);
+    glDrawArrays(GL_LINE, 0, points.size()/2);
     glBindVertexArray(0);
 }
 
