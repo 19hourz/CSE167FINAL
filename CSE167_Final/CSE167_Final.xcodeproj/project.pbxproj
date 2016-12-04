@@ -191,7 +191,7 @@
 				TargetAttributes = {
 					287543981DE3FF30004C0FB2 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = RY5642NV8L;
+						DevelopmentTeam = 5YFX8A6H5D;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -328,7 +328,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				DEVELOPMENT_TEAM = RY5642NV8L;
+				DEVELOPMENT_TEAM = 5YFX8A6H5D;
 				HEADER_SEARCH_PATHS = (
 					"/Developer/glfw-3.2.1/include",
 					/Developer/glm,
@@ -342,7 +342,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mac Developer";
-				DEVELOPMENT_TEAM = RY5642NV8L;
+				DEVELOPMENT_TEAM = 5YFX8A6H5D;
 				HEADER_SEARCH_PATHS = (
 					"/Developer/glfw-3.2.1/include",
 					/Developer/glm,
