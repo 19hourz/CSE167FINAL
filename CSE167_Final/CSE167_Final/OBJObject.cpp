@@ -103,22 +103,20 @@ OBJObject::OBJObject(const char *filepath)
 //        }
 //    }
     
-//    GLfloat boxVertices[] = {
-//        //front
-//        -2.0, -2.0,  2.0,
-//        2.0, -2.0,  2.0,
-//        2.0,  2.0,  2.0,
-//        -2.0,  2.0,  2.0,
-//        // "Back" vertices
-//        -2.0, -2.0, -2.0,
-//        2.0, -2.0, -2.0,
-//        2.0,  2.0, -2.0,
-//        -2.0,  2.0, -2.0
-//    };
-    
-    points.push_back(vec3(-0.5,-0.5,0.5));points.push_back(vec3(0.5,-0.5,0.5));points.push_back(vec3(0.5,-0.5,0.5));points.push_back(vec3(0.5,0.5,0.5));points.push_back(vec3(-0.5,0.5,0.5));
-    points.push_back(vec3(-0.5,-0.5,-0.5));points.push_back(vec3(0.5,-0.5,-0.5));points.push_back(vec3(0.5,0.5,-0.5));points.push_back(vec3(-0.5,0.5,-0.5));
 
+    
+    int numStack = 10;
+    points.clear();
+    for (int j = 0; j <= numStack; j++){
+        float height = -0.5f + 0.1*j;
+        points.push_back(-0.5);points.push_back(height);points.push_back(-0.5);
+        points.push_back(-0.5);points.push_back(height);points.push_back(0.5);
+        points.push_back(0.5);points.push_back(height);points.push_back(0.5);
+        points.push_back(0.5);points.push_back(height);points.push_back(-0.5);
+        points.push_back(-0.5);points.push_back(height);points.push_back(-0.5);
+    }
+    
+    
     
     glBindVertexArray(0);
     glGenVertexArrays(1, &CAO);
@@ -278,15 +276,20 @@ void OBJObject::draw(glm::mat4 mat)
     // Unbind the VAO when we're done so we don't accidentally draw extra stuff or tamper with its bound buffers
     glBindVertexArray(0);
     
-    glm::mat4 modelview = Window::V * mat * toWorld;
-    glUseProgram(Window::cubeShader);
-    uProjection = glGetUniformLocation(Window::cubeShader, "projection");
-    uModelview = glGetUniformLocation(Window::cubeShader, "modelview");
-    glUniformMatrix4fv(uProjection, 1, GL_FALSE, &Window::P[0][0]);
-    glUniformMatrix4fv(uModelview, 1, GL_FALSE, &modelview[0][0]);
-    glBindVertexArray(CAO);
-    glDrawArrays(GL_LINE, 0, points.size()/2);
-    glBindVertexArray(0);
+    
+    if(Window::showBounding){
+        glm::mat4 modelview = Window::V * mat * toWorld;
+        glUseProgram(Window::cubeShader);
+        uProjection = glGetUniformLocation(Window::cubeShader, "projection");
+        uModelview = glGetUniformLocation(Window::cubeShader, "modelview");
+        GLuint utype = glGetUniformLocation(Window::cubeShader, "type");
+        
+        glUniformMatrix4fv(uProjection, 1, GL_FALSE, &Window::P[0][0]);
+        glUniformMatrix4fv(uModelview, 1, GL_FALSE, &modelview[0][0]);
+        glBindVertexArray(CAO);
+        glDrawArrays(GL_LINE_STRIP, 0, points.size()/3);
+        glBindVertexArray(0);
+    }
 }
 
 void OBJObject::update()

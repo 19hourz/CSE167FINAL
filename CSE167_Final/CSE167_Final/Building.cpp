@@ -68,7 +68,7 @@ Building::Building()
     
     //cout << "!!!!!" << textureID << endl;
     Building::block = new Cube(textureID);
-    numBlocks = 0;
+    numBlocks = 4;
     toWorld = mat4(1.0f);
     randBuilding();
 }

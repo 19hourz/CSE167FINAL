@@ -46,7 +46,7 @@
 class OBJObject
 {
 protected:
-    std::vector<glm::vec3> points;
+    std::vector<float> points;
 
 public:
     //Public variables
