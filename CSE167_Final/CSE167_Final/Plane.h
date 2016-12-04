@@ -24,6 +24,7 @@
 class Plane :public Geode{
 protected:
 public:
+    bool pause = false;
     glm::vec3 center;
     glm::vec3 direction;
     glm::vec3 velocity;

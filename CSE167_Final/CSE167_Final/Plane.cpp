@@ -44,33 +44,36 @@ void Plane::draw(mat4 C)
 
 void Plane::update()
 {
-    if (center.y < 0.2f) {
-        center.y = 0.2;
+    if (!pause) {
+        
+        if (center.y < 0.2f) {
+            center.y = 0.2;
+        }
+        GLfloat seudoHeight = 0.0;
+        GLfloat seudoFriction = 0.0;
+        if (center.y > 0.3f) {
+            seudoHeight = 0.01 * direction.y;
+        }
+        if (center.y < 0.21f) {
+            seudoFriction  = airSpeed * 0.5;
+        }
+        else{
+            seudoFriction = airSpeed * airSpeed;
+        }
+        GLfloat delta = propellerSpeed * 0.01 - seudoFriction - seudoHeight;
+        airSpeed += delta;
+        if (airSpeed < 0) {
+            airSpeed = 0.0;
+        }
+        printf("speed: %f\n", airSpeed);
+        if (deg < 360) {
+            deg = deg+0.5*propellerSpeed;
+        }
+        else{
+            deg = 0.0;
+        }
+        center += airSpeed * direction;
     }
-    GLfloat seudoHeight = 0.0;
-    GLfloat seudoFriction = 0.0;
-    if (center.y > 0.3f) {
-        seudoHeight = 0.01 * direction.y;
-    }
-    if (center.y < 0.21f) {
-        seudoFriction  = airSpeed * 0.5;
-    }
-    else{
-        seudoFriction = airSpeed * airSpeed;
-    }
-    GLfloat delta = propellerSpeed * 0.01 - seudoFriction - seudoHeight;
-    airSpeed += delta;
-    if (airSpeed < 0) {
-        airSpeed = 0.0;
-    }
-    printf("speed: %f\n", airSpeed);
-    if (deg < 360) {
-        deg = deg+0.5*propellerSpeed;
-    }
-    else{
-        deg = 0.0;
-    }
-    center += airSpeed * direction;
     
 }
 
@@ -146,6 +149,7 @@ vec3 Plane::getCenter(){
 }
 
 void Plane::reset(){
+    pause = false;
     propellerSpeed = 0.0;
     airSpeed = 0.0;
     deg = 0.0;

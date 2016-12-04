@@ -49,18 +49,28 @@ void Building::randBuilding(){
         pos = translate(mat4(1.0f), vec3(x,0.0,z)) * pos;
         blocksPos.push_back(pos);
         blockSizes.push_back(vec3(width,height,length));
-        blockSizes.push_back(vec3(x,0.0,z));
+        cornerPoints.push_back(vec3(x,0.0,z));
     }
+    
+    cout << blockSizes.size() << endl;
+    for(int i = 0; i < blockSizes.size(); i++){
+        vec3 blockSize = blockSizes.at(i);
+        vec3 cornerPoint = cornerPoints.at(i);
+        printf("blockSize: %f %f %f \n", blockSize.x,blockSize.y,blockSize.z);
+        printf("cornerPoint: %f %f %f \n", cornerPoint.x,cornerPoint.y,cornerPoint.z);
+    }
+    
 }
 
 Building::Building()
 {
     buildingPos = vec3(0.0,0.0,0.0);
-    randBuilding();
+    
     //cout << "!!!!!" << textureID << endl;
     Building::block = new Cube(textureID);
-    numBlocks = 4;
+    numBlocks = 0;
     toWorld = mat4(1.0f);
+    randBuilding();
 }
 
 Building::~Building()
@@ -100,7 +110,12 @@ vector<glm::vec3> Building::getCornerPoints(){
 
 void Building::moveBuildingPos(vec3 dist){
     
+//    printf("dist: %f %f %f \n",dist.x,dist.y,dist.z);
+//    printf("build: %f %f %f \n",buildingPos.x,buildingPos.y,buildingPos.z);
     buildingPos = buildingPos + dist;
+//    cout << "???????????????/" << endl;
+//    printf("build: %f %f %f \n",buildingPos.x,buildingPos.y,buildingPos.z);
+
 
 }
 
