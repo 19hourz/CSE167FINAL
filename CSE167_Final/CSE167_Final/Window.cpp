@@ -61,6 +61,7 @@ double lastX;
 double lastY;
 bool camShouldMove;
 bool Window::shouldRebuild;
+bool Window::showBounding;
 mat4 groundPos1,groundPos2,groundPos3,groundPos4;
 std::vector<Building*> buildings;
 
@@ -195,6 +196,7 @@ void Window::initialize_objects()
     srand (1);//Random seed
     camShouldMove = false;
     Window::shouldRebuild = false;
+    Window::showBounding = false;
     Window::worldPos = translate(mat4(1.0f), vec3(-50,0,-50));
     //worldPos = mat4(1.0f);
     mat4 flip = rotate(mat4(1.0f), glm::pi<float>(), glm::vec3(0.0f, 0.0f, 1.0f)) * translate(mat4(1.0f), vec3(-50.0f,0.0f,0.0f));
@@ -443,6 +445,12 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
         }
         else if (key == GLFW_KEY_R){
             plane->reset();
+        }
+        else if (key == GLFW_KEY_C){
+            if(Window::showBounding)
+                Window::showBounding= false;
+            else
+                Window::showBounding = true;
         }
         
         //Regenerate buildings
