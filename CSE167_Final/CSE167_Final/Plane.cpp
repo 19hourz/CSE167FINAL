@@ -13,6 +13,10 @@ vec3 oriDirec = vec3(0.0f, 0.0f, -1.0f);
 GLfloat horizontalDeg = 0.0f;
 GLfloat verticalDeg = 0.0f;
 GLfloat totalE = 0.0;
+irrklang::ISoundEngine* planeEngine;
+irrklang::ISound* idleSound;
+irrklang::ISound* steadySound;
+bool hasPlayedExplosionSound = false;
 Plane::Plane()
 {
     deg = 0.0;
@@ -25,7 +29,11 @@ Plane::Plane()
     propeller2 = new Cube(10);
     direction = normalize(direction);
     propeller = new OBJObject("./Glider.obj");
-    
+    planeEngine = irrklang::createIrrKlangDevice();
+    idleSound = planeEngine->play2D("./media/idle.wav", true, false, true);
+    steadySound = planeEngine->play2D("./media/steady.wav", true, false, true);
+    idleSound->setVolume((3.0f-propellerSpeed)/3.0f);
+    steadySound->setVolume(propellerSpeed/3.0f);
 }
 
 void Plane::draw(mat4 C)
@@ -46,7 +54,8 @@ void Plane::draw(mat4 C)
 void Plane::update()
 {
     if (!pause) {
-        
+        idleSound->setVolume((3.0f-propellerSpeed)/4.0f+0.25f);
+        steadySound->setVolume(propellerSpeed/3.0f);
         if (center.y < 0.2f) {
             center.y = 0.2;
         }
@@ -74,7 +83,14 @@ void Plane::update()
         }
         center += airSpeed * direction;
     }
-    
+    else{
+        if (!hasPlayedExplosionSound) {
+            planeEngine->play2D("./media/explosion.wav", false);
+            hasPlayedExplosionSound = true;
+        }
+        idleSound->setVolume(0.0f);
+        steadySound->setVolume(0.0f);
+    }
 }
 
 GLfloat Plane::speedUp(GLfloat d)
@@ -89,6 +105,7 @@ GLfloat Plane::speedUp(GLfloat d)
 GLfloat Plane::speedDown(GLfloat d)
 {
     propellerSpeed -= d;
+    
     if (propellerSpeed <= 0.0) {
         propellerSpeed = 0.0;
     }
@@ -149,6 +166,7 @@ vec3 Plane::getCenter(){
 }
 
 void Plane::reset(){
+    hasPlayedExplosionSound = false;
     pause = false;
     propellerSpeed = 0.0;
     airSpeed = 0.0;

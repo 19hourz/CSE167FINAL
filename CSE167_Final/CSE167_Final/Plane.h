@@ -34,7 +34,7 @@ public:
     GLfloat deg;
     glm::mat4 toWorld;
     GLfloat airSpeed = 0.0;
-    GLfloat propellerSpeed = 0.0;
+    float propellerSpeed = 0.0;
     void draw(mat4) override;
     void update() override;
     GLfloat speedUp(GLfloat);

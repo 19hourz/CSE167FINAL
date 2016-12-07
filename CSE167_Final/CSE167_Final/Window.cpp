@@ -1,5 +1,4 @@
 #include "window.h"
-#include <irrKlang.h>
 
 using namespace glm;
 using namespace std;
@@ -197,8 +196,6 @@ void Window::initialize_objects()
     Window::cityTexture2 = loadTexture("./textures/city2.ppm");
     cityTexture3 = loadTexture("./textures/city3.ppm");
     cityTexture4 = loadTexture("./textures/city4.ppm");
-    irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
-    //engine->play2D("./media/getout.ogg", true);
 
     srand (1);//Random seed
     camShouldMove = false;
