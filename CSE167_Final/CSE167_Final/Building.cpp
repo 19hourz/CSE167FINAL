@@ -52,12 +52,12 @@ void Building::randBuilding(){
         cornerPoints.push_back(vec3(x,0.0,z));
     }
     
-    cout << blockSizes.size() << endl;
+//    cout << blockSizes.size() << endl;
     for(int i = 0; i < blockSizes.size(); i++){
         vec3 blockSize = blockSizes.at(i);
         vec3 cornerPoint = cornerPoints.at(i);
-        printf("blockSize: %f %f %f \n", blockSize.x,blockSize.y,blockSize.z);
-        printf("cornerPoint: %f %f %f \n", cornerPoint.x,cornerPoint.y,cornerPoint.z);
+//        printf("blockSize: %f %f %f \n", blockSize.x,blockSize.y,blockSize.z);
+//        printf("cornerPoint: %f %f %f \n", cornerPoint.x,cornerPoint.y,cornerPoint.z);
     }
     
 }
@@ -68,7 +68,7 @@ Building::Building()
     
     //cout << "!!!!!" << textureID << endl;
     Building::block = new Cube(textureID);
-    numBlocks = 0;
+    numBlocks = 4;
     toWorld = mat4(1.0f);
     randBuilding();
 }

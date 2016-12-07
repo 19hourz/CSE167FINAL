@@ -63,6 +63,8 @@ double lastX;
 double lastY;
 bool camShouldMove;
 bool Window::shouldRebuild;
+bool Window::showBounding;
+bool Window::isCollide;
 mat4 groundPos1,groundPos2,groundPos3,groundPos4;
 std::vector<Building*> buildings;
 
@@ -104,6 +106,7 @@ unsigned char* readPPM(const char* filename, int& width, int& height)
     retval_sscanf=sscanf(buf[0], "%s %s", buf[1], buf[2]);
     width  = atoi(buf[1]);
     height = atoi(buf[2]);
+    
     
     // Read maxval:
     do
@@ -166,10 +169,10 @@ bool checkCollision(Building* buildingObj, Plane* planeObj){
     for(int i = 0; i < cornerPoints.size(); i++){
         bool collisionX = cornerPoints.at(i).x + buildingPos.x + blockSizes.at(i).x >= planeCenter.x - 0.5f &&
         planeCenter.x + 0.5f >= cornerPoints.at(i).x + buildingPos.x;
-        bool collisionY = cornerPoints.at(i).y + blockSizes.at(i).y >= planeCenter.y - 0.5f &&
-        planeCenter.y + 0.5f >= cornerPoints.at(i).y + buildingPos.y;
-        bool collisionZ = cornerPoints.at(i).z + buildingPos.z + blockSizes.at(i).z >= planeCenter.z - 0.5f &&
-        planeCenter.z + 0.5f >= cornerPoints.at(i).z + buildingPos.z;
+        bool collisionY = cornerPoints.at(i).y + blockSizes.at(i).y >= planeCenter.y - 0.113483f &&
+        planeCenter.y + 0.113483f >= cornerPoints.at(i).y + buildingPos.y;
+        bool collisionZ = cornerPoints.at(i).z + buildingPos.z + blockSizes.at(i).z >= planeCenter.z - 0.3037505f &&
+        planeCenter.z + 0.303750f >= cornerPoints.at(i).z + buildingPos.z;
         if(collisionX && collisionY && collisionZ) return true;
     }
     return false;
@@ -200,6 +203,8 @@ void Window::initialize_objects()
     srand (1);//Random seed
     camShouldMove = false;
     Window::shouldRebuild = false;
+    Window::showBounding = false;
+    Window::isCollide = false;
     Window::worldPos = translate(mat4(1.0f), vec3(-50,0,-50));
     //worldPos = mat4(1.0f);
     mat4 flip = rotate(mat4(1.0f), glm::pi<float>(), glm::vec3(0.0f, 0.0f, 1.0f)) * translate(mat4(1.0f), vec3(-50.0f,0.0f,0.0f));
@@ -381,6 +386,7 @@ void Window::idle_callback()
     
     for (int i = 0; i < buildings.size(); i++){
         if (checkCollision(buildings.at(i), plane)){
+            Window::isCollide = true;
             plane->pause = true;
             break;
             cout << "!!!!!" << endl;
@@ -449,6 +455,13 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
         }
         else if (key == GLFW_KEY_R){
             plane->reset();
+            Window::isCollide = false;
+        }
+        else if (key == GLFW_KEY_C){
+            if(Window::showBounding)
+                Window::showBounding= false;
+            else
+                Window::showBounding = true;
         }
         
         //Regenerate buildings

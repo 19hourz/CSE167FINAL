@@ -9,8 +9,12 @@ using namespace std;
 using namespace glm;
 
 
-OBJObject::OBJObject(const char *filepath) 
+float OBJObject::minX;
+
+OBJObject::OBJObject(const char *filepath)
 {
+
+    
     toWorld = glm::mat4(1.0f);
     angle = 0.0f;
     square_point_size = 0;
@@ -71,6 +75,39 @@ OBJObject::OBJObject(const char *filepath)
     // Unbind the VAO now so we don't accidentally tamper with it.
     // NOTE: You must NEVER unbind the element array buffer associated with a VAO!
     glBindVertexArray(0);
+    
+    
+    
+
+    
+    int numStack = 50;
+    float yDiff = 0.113483 + 0.113483;
+    points.clear();
+    for (int j = 0; j <= numStack + 1; j++){
+        float height = -0.113483f + yDiff/numStack * j;
+        points.push_back(-0.5);points.push_back(height);points.push_back(-0.303750);
+        points.push_back(-0.5);points.push_back(height);points.push_back(0.303750);
+        points.push_back(0.5);points.push_back(height);points.push_back(0.303750);
+        points.push_back(0.5);points.push_back(height);points.push_back(-0.303750);
+        points.push_back(-0.5);points.push_back(height);points.push_back(-0.303750);
+    }
+    
+    
+    
+    glBindVertexArray(0);
+    glGenVertexArrays(1, &CAO);
+    glGenBuffers(1, &CBO);
+    glBindVertexArray(CAO);
+    glBindBuffer(GL_ARRAY_BUFFER, CBO);
+    glBufferData(GL_ARRAY_BUFFER, points.size()*sizeof(GLfloat), &points[0], GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0,
+                          3,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          3 * sizeof(GLfloat),
+                          (GLvoid*)0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 }
 
@@ -169,6 +206,10 @@ void OBJObject::parse(const char *filepath)
     dif_y = max_y - min_y;
     dif_z = max_z - min_z;
     
+    
+   
+
+    
     if ( dif_x < dif_y ){
         longest_axis = dif_y;
     }
@@ -178,6 +219,20 @@ void OBJObject::parse(const char *filepath)
     if ( z > longest_axis ){
         longest_axis = dif_z;
     }
+    
+//    minX = (min_x-avg_x)/longest_axis;
+//    float maxX = (max_x-avg_x)/longest_axis;
+//    float minY = (min_y-avg_y)/longest_axis;
+//    float maxY = (max_y-avg_y)/longest_axis;
+//    float minZ = (min_z-avg_z)/longest_axis;
+//    float maxZ = (max_z-avg_z)/longest_axis;
+    
+//    printf("x: %f, %f \n",minX,maxX);
+//    printf("y: %f, %f \n",minY,maxY);
+//    printf("z: %f, %f \n",minZ,maxZ);
+    
+
+    
     
     fp = fopen(filepath,"rb");  // make the file name configurable so you can load other files
     if (fp==NULL) { cerr << "error loading file" << endl; exit(-1); }  // just in case the file can't be found or is corrupt
@@ -214,6 +269,26 @@ void OBJObject::draw(glm::mat4 mat)
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
     // Unbind the VAO when we're done so we don't accidentally draw extra stuff or tamper with its bound buffers
     glBindVertexArray(0);
+    
+    
+    if(Window::showBounding){
+        glm::mat4 modelview = Window::V * mat * toWorld;
+        glUseProgram(Window::cubeShader);
+        uProjection = glGetUniformLocation(Window::cubeShader, "projection");
+        uModelview = glGetUniformLocation(Window::cubeShader, "modelview");
+        GLuint utype = glGetUniformLocation(Window::cubeShader, "type");
+        if(Window::isCollide)
+            glUniform1i(utype, 12);
+        else
+            glUniform1i(utype, 11);
+
+        
+        glUniformMatrix4fv(uProjection, 1, GL_FALSE, &Window::P[0][0]);
+        glUniformMatrix4fv(uModelview, 1, GL_FALSE, &modelview[0][0]);
+        glBindVertexArray(CAO);
+        glDrawArrays(GL_LINE_STRIP, 0, points.size()/3);
+        glBindVertexArray(0);
+    }
 }
 
 void OBJObject::update()

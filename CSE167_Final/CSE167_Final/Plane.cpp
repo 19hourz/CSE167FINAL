@@ -25,6 +25,7 @@ Plane::Plane()
     propeller2 = new Cube(10);
     direction = normalize(direction);
     propeller = new OBJObject("./Glider.obj");
+    
 }
 
 void Plane::draw(mat4 C)

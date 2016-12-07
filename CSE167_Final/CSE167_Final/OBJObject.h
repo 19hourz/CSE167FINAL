@@ -45,8 +45,8 @@
 
 class OBJObject
 {
-private:
-
+protected:
+    std::vector<float> points;
 
 public:
     //Public variables
@@ -57,10 +57,12 @@ public:
     float angle;
     float pointSize;
     int square_point_size;
+    static float minX;
     
     unsigned int target_obj;
     // These variables are needed for the shader program
     GLuint VBO, VAO, EBO, VBO_Normals;
+    GLuint CAO, CBO;
     GLuint uProjection, uModelview, uModel;
     GLint matAmbientLoc,matDiffuseLoc,matSpecularLoc,matShineLoc;
     GLint lightPosLoc;
