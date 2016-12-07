@@ -59,7 +59,7 @@ public:
     static GLuint cityTexture2;
     static GLuint cityTexture3;
     static GLuint cityTexture4;
-
+    static GLuint FBO;
 
     //Functions
 	static void initialize_objects();
