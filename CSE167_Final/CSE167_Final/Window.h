@@ -20,13 +20,11 @@
 #include "Water.h"
 #include "OBJObject.h"
 #include <vector>
+#include <irrKlang.h>
 
 
 class Window
 {
-    
-    
-
 public:
     //Variables
     static glm::mat4 worldPos;
@@ -38,7 +36,6 @@ public:
     static bool showBounding;
     static bool isCollide;
     static vec3 cam_pos;
-    
 
     //Shaders
     static GLuint skyboxShader;
@@ -72,9 +69,6 @@ public:
     static void mouse_move_callback(GLFWwindow* window, double xpos, double ypos);
     static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
     static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-
-
-
 };
 
 #endif
