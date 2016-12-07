@@ -25,6 +25,7 @@ Plane::Plane()
     propeller2 = new Cube(10);
     direction = normalize(direction);
     propeller = new OBJObject("./Glider.obj");
+    
 }
 
 void Plane::draw(mat4 C)
@@ -65,7 +66,7 @@ void Plane::update()
         if (airSpeed < 0) {
             airSpeed = 0.0;
         }
-        printf("speed: %f\n", airSpeed);
+        //printf("speed: %f\n", airSpeed);
         if (deg < 360) {
             deg = deg+0.5*propellerSpeed;
         }
