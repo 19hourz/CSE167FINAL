@@ -20,7 +20,7 @@ Plane::Plane()
     direction = normalize(vec3(0.0f, 0.0f, -1.0f));
     velocity = normalize(direction);
     upDirection = vec3(0.0f, 1.0f, 0.0f);
-    center = vec3(0.0f, 0.2f, 0.0f);
+    center = vec3(-25.5f, 0.2f,45.0f);
     propeller1 = new Cube(10);
     propeller2 = new Cube(10);
     direction = normalize(direction);
@@ -157,7 +157,7 @@ void Plane::reset(){
     direction = normalize(vec3(0.0f, 0.0f, -1.0f));
     velocity = normalize(direction);
     upDirection = vec3(0.0f, 1.0f, 0.0f);
-    center = vec3(0.0f, 0.2f, 0.0f);
+    center = vec3(-25.5f, 0.2f,45.0f);
     rotation = mat4(1.0f);
     oriDirec = vec3(0.0f, 0.0f, -1.0f);
 }

@@ -198,7 +198,7 @@ void Window::initialize_objects()
     cityTexture3 = loadTexture("./textures/city3.ppm");
     cityTexture4 = loadTexture("./textures/city4.ppm");
     irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
-    //engine->play2D("./media/getout.ogg", true);
+//    engine->play2D("./media/getout.ogg", true);
 
     srand (1);//Random seed
     camShouldMove = false;
