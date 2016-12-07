@@ -36,7 +36,9 @@ public:
 	static glm::mat4 V; // V for view
     static bool shouldRebuild;
     static bool showBounding;
+    static bool isCollide;
     static vec3 cam_pos;
+    
 
     //Shaders
     static GLuint skyboxShader;

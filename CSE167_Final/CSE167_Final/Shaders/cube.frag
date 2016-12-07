@@ -26,5 +26,11 @@ void main()
     if (type == 10) {//139,69,19
         color = vec4(0.54f, 0.27f, 0.07f, 1.0f);
     }
+    if (type == 11) {
+        color = vec4(1.0f,1.0f,1.0f,1.0f);
+    }
+    if (type == 12) {
+        color = vec4(0.8f,0.0f,0.0f,1.0f);
+    }
 }
 

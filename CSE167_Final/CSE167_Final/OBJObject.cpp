@@ -9,7 +9,7 @@ using namespace std;
 using namespace glm;
 
 
-
+float OBJObject::minX;
 
 OBJObject::OBJObject(const char *filepath)
 {
@@ -80,15 +80,16 @@ OBJObject::OBJObject(const char *filepath)
     
 
     
-    int numStack = 100;
+    int numStack = 50;
+    float yDiff = 0.113483 + 0.113483;
     points.clear();
-    for (int j = 0; j <= numStack; j++){
-        float height = -0.5f + 0.01*j;
-        points.push_back(-0.5);points.push_back(height);points.push_back(-0.5);
-        points.push_back(-0.5);points.push_back(height);points.push_back(0.5);
-        points.push_back(0.5);points.push_back(height);points.push_back(0.5);
-        points.push_back(0.5);points.push_back(height);points.push_back(-0.5);
-        points.push_back(-0.5);points.push_back(height);points.push_back(-0.5);
+    for (int j = 0; j <= numStack + 1; j++){
+        float height = -0.113483f + yDiff/numStack * j;
+        points.push_back(-0.5);points.push_back(height);points.push_back(-0.303750);
+        points.push_back(-0.5);points.push_back(height);points.push_back(0.303750);
+        points.push_back(0.5);points.push_back(height);points.push_back(0.303750);
+        points.push_back(0.5);points.push_back(height);points.push_back(-0.303750);
+        points.push_back(-0.5);points.push_back(height);points.push_back(-0.303750);
     }
     
     
@@ -205,6 +206,10 @@ void OBJObject::parse(const char *filepath)
     dif_y = max_y - min_y;
     dif_z = max_z - min_z;
     
+    
+   
+
+    
     if ( dif_x < dif_y ){
         longest_axis = dif_y;
     }
@@ -214,6 +219,20 @@ void OBJObject::parse(const char *filepath)
     if ( z > longest_axis ){
         longest_axis = dif_z;
     }
+    
+//    minX = (min_x-avg_x)/longest_axis;
+//    float maxX = (max_x-avg_x)/longest_axis;
+//    float minY = (min_y-avg_y)/longest_axis;
+//    float maxY = (max_y-avg_y)/longest_axis;
+//    float minZ = (min_z-avg_z)/longest_axis;
+//    float maxZ = (max_z-avg_z)/longest_axis;
+    
+//    printf("x: %f, %f \n",minX,maxX);
+//    printf("y: %f, %f \n",minY,maxY);
+//    printf("z: %f, %f \n",minZ,maxZ);
+    
+
+    
     
     fp = fopen(filepath,"rb");  // make the file name configurable so you can load other files
     if (fp==NULL) { cerr << "error loading file" << endl; exit(-1); }  // just in case the file can't be found or is corrupt
@@ -258,6 +277,11 @@ void OBJObject::draw(glm::mat4 mat)
         uProjection = glGetUniformLocation(Window::cubeShader, "projection");
         uModelview = glGetUniformLocation(Window::cubeShader, "modelview");
         GLuint utype = glGetUniformLocation(Window::cubeShader, "type");
+        if(Window::isCollide)
+            glUniform1i(utype, 12);
+        else
+            glUniform1i(utype, 11);
+
         
         glUniformMatrix4fv(uProjection, 1, GL_FALSE, &Window::P[0][0]);
         glUniformMatrix4fv(uModelview, 1, GL_FALSE, &modelview[0][0]);

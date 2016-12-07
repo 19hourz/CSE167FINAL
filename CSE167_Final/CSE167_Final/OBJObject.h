@@ -57,6 +57,7 @@ public:
     float angle;
     float pointSize;
     int square_point_size;
+    static float minX;
     
     unsigned int target_obj;
     // These variables are needed for the shader program
