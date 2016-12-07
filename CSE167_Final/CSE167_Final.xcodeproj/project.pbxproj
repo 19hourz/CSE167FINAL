@@ -20,6 +20,7 @@
 		283355CB1DE4F21500C9D118 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355C61DE4F21500C9D118 /* Node.cpp */; };
 		283355D21DE5066D00C9D118 /* Building.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 283355D01DE5066D00C9D118 /* Building.cpp */; };
 		28AA8BEE1DF105EC00BE72F0 /* OBJObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28AA8BEC1DF105EC00BE72F0 /* OBJObject.cpp */; };
+		5257E6201DF7BD8800C2592E /* libirrklang.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5257E61D1DF7B9E200C2592E /* libirrklang.dylib */; };
 		52DB8B8C1DEE93A200B6DFAE /* Plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52DB8B8A1DEE93A200B6DFAE /* Plane.cpp */; };
 		52DB8B8F1DEFA2E400B6DFAE /* Water.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52DB8B8D1DEFA2E400B6DFAE /* Water.cpp */; };
 /* End PBXBuildFile section */
@@ -70,6 +71,7 @@
 		520B72831DF1EE7D00867679 /* aircraft.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aircraft.obj; sourceTree = "<group>"; };
 		520B72841DF20A5A00867679 /* shader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.frag; sourceTree = "<group>"; };
 		520B72851DF20A5A00867679 /* shader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.vert; sourceTree = "<group>"; };
+		5257E61D1DF7B9E200C2592E /* libirrklang.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libirrklang.dylib; path = CSE167_Final/libirrklang.dylib; sourceTree = "<group>"; };
 		52DB8B891DEE936300B6DFAE /* Plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plane.h; sourceTree = "<group>"; };
 		52DB8B8A1DEE93A200B6DFAE /* Plane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Plane.cpp; sourceTree = "<group>"; };
 		52DB8B8D1DEFA2E400B6DFAE /* Water.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Water.cpp; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5257E6201DF7BD8800C2592E /* libirrklang.dylib in Frameworks */,
 				2821FB8B1DE40A1E000D04BF /* libglfw.3.2.dylib in Frameworks */,
 				2821FB891DE40980000D04BF /* OpenGL.framework in Frameworks */,
 			);
@@ -94,6 +97,7 @@
 		2821FB871DE40980000D04BF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5257E61D1DF7B9E200C2592E /* libirrklang.dylib */,
 				2821FB8A1DE40A1E000D04BF /* libglfw.3.2.dylib */,
 				2821FB881DE40980000D04BF /* OpenGL.framework */,
 			);
@@ -332,8 +336,17 @@
 				HEADER_SEARCH_PATHS = (
 					"/Developer/glfw-3.2.1/include",
 					/Developer/glm,
+					/Developer/irrKlang/include,
 				);
-				LIBRARY_SEARCH_PATHS = "/Developer/glfw-3.2.1/src";
+				INSTALL_PATH = /usr/local/bin;
+				LD_DYLIB_INSTALL_NAME = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"/Developer/glfw-3.2.1/src",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/CSE167_Final",
+					"/Developer/irrKlang/bin/macosx-gcc",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -346,8 +359,17 @@
 				HEADER_SEARCH_PATHS = (
 					"/Developer/glfw-3.2.1/include",
 					/Developer/glm,
+					/Developer/irrKlang/include,
 				);
-				LIBRARY_SEARCH_PATHS = "/Developer/glfw-3.2.1/src";
+				INSTALL_PATH = /usr/local/bin;
+				LD_DYLIB_INSTALL_NAME = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"/Developer/glfw-3.2.1/src",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/CSE167_Final",
+					"/Developer/irrKlang/bin/macosx-gcc",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -65,7 +65,6 @@ void Plane::update()
         if (airSpeed < 0) {
             airSpeed = 0.0;
         }
-        printf("speed: %f\n", airSpeed);
         if (deg < 360) {
             deg = deg+0.5*propellerSpeed;
         }

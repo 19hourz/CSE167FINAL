@@ -1,4 +1,5 @@
 #include "window.h"
+#include <irrKlang.h>
 
 using namespace glm;
 using namespace std;
@@ -8,6 +9,7 @@ const char* window_title = "PROPELLER PLANE SIMULATER";
 GLuint Window::buildingTexture,Window::buildingTexture1,Window::buildingTexture2,Window::buildingTexture3,Window::buildingTexture4;
 GLuint Window::buildingTexture5,Window::buildingTexture6,Window::buildingTexture7,Window::buildingTexture8;
 GLuint Window::cityTexture1,Window::cityTexture2,Window::cityTexture3,Window::cityTexture4;
+GLuint Window::FBO;
 //Object variables
 Group* world;
 Cube * cube;
@@ -173,9 +175,11 @@ bool checkCollision(Building* buildingObj, Plane* planeObj){
     return false;
 }
 
-
 void Window::initialize_objects()
 {
+//    glGenFramebuffers(1, &FBO);
+//    glBindBuffer(GL_FRAMEBUFFER, FBO);
+//    glDrawBuffer(GL_COLOR_ATTACHMENT0);
     //Load Texture
     Window::buildingTexture = loadTexture("./textures/Building.ppm");
     Window::buildingTexture1 = loadTexture("./textures/Building1.ppm");
@@ -190,8 +194,9 @@ void Window::initialize_objects()
     Window::cityTexture2 = loadTexture("./textures/city2.ppm");
     cityTexture3 = loadTexture("./textures/city3.ppm");
     cityTexture4 = loadTexture("./textures/city4.ppm");
-    
-    
+    irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
+    //engine->play2D("./media/getout.ogg", true);
+
     srand (1);//Random seed
     camShouldMove = false;
     Window::shouldRebuild = false;
@@ -389,6 +394,7 @@ void Window::idle_callback()
 
 void Window::display_callback(GLFWwindow* window)
 {
+    //glBindBuffer(9511, )
     // Clear the color and depth buffers
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Draw skybox first
