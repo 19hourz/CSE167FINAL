@@ -47,7 +47,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/xinghangli/Documents/CSE167FINAL/CSE167_Final/CSE167_Final"
+      customWorkingDirectory = "/Users/xinghangli/Documents/UCSD_PA/CSE_167/CSE167FINAL/CSE167_Final/CSE167_Final"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
