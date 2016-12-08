@@ -32,8 +32,8 @@ Plane::Plane()
     planeEngine = irrklang::createIrrKlangDevice();
     idleSound = planeEngine->play2D("./media/idle.wav", true, false, true);
     steadySound = planeEngine->play2D("./media/steady.wav", true, false, true);
-    idleSound->setVolume((3.0f-propellerSpeed)/3.0f);
-    steadySound->setVolume(propellerSpeed/3.0f);
+    idleSound->setVolume((3.0f-propellerSpeed)/8.0f);
+    steadySound->setVolume(propellerSpeed);
 }
 
 void Plane::draw(mat4 C)
